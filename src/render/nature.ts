@@ -4,7 +4,7 @@ import { ctx2d, disque, ellipse, mix, rgba, shade, toile } from './util';
 
 const cache = new Map<string, HTMLCanvasElement>();
 
-export type Essence = 'feuillu' | 'sapin' | 'brume' | 'automne';
+export type Essence = 'feuillu' | 'sapin' | 'brume' | 'automne' | 'palmier';
 
 /** Arbre d'une case de large, ~2 cases de haut ; le pied est en bas du sprite. */
 export function spriteArbre(L: number, essence: Essence, variante: number): HTMLCanvasElement {
@@ -17,6 +17,11 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
   const x = ctx2d(c);
   const cx = w / 2;
   const pied = h - L * 0.2;
+  if (essence === 'palmier') {
+    palmier(x, L, cx, pied, variante);
+    cache.set(k, c);
+    return c;
+  }
   x.fillStyle = PAL.tronc;
   x.fillRect(cx - L * 0.09, pied - L * 0.7, L * 0.18, L * 0.7);
   x.fillStyle = shade(PAL.tronc, -0.3);
@@ -41,7 +46,7 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
       x.fill();
     }
   } else {
-    const palettes: Record<Exclude<Essence, 'sapin'>, [string, string, string]> = {
+    const palettes: Record<Exclude<Essence, 'sapin' | 'palmier'>, [string, string, string]> = {
       feuillu: [PAL.feuillageFonce, PAL.feuillage, PAL.feuillageClair],
       automne: ['#8a4b2a', '#d7863c', '#f2b84b'],
       brume: ['#3a3456', '#5b4b7a', '#8a7aac'],
@@ -82,4 +87,48 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
   }
   cache.set(k, c);
   return c;
+}
+
+/** Palmier : tronc annelé incliné, couronne de palmes en éventail, quelques dattes. */
+function palmier(x: CanvasRenderingContext2D, L: number, cx: number, pied: number, variante: number): void {
+  const pente = (variante - 0.5) * L * 0.5;
+  const tete = { x: cx + pente, y: pied - L * 1.45 };
+  ellipse(x, cx, pied - L * 0.02, L * 0.3, L * 0.1, rgba('#000000', 0.18));
+  // Tronc en segments.
+  const n = 7;
+  for (let i = 0; i < n; i++) {
+    const t0 = i / n;
+    const px = cx + pente * t0 * t0;
+    const py = pied - (pied - tete.y) * t0;
+    const larg = L * (0.13 - t0 * 0.04);
+    x.fillStyle = i % 2 ? '#8a6440' : '#a57a4c';
+    x.beginPath();
+    x.ellipse(px, py, larg, L * 0.12, 0, 0, Math.PI * 2);
+    x.fill();
+  }
+  // Palmes.
+  const palmes = 7;
+  for (let i = 0; i < palmes; i++) {
+    const a = -Math.PI + (i / (palmes - 1)) * Math.PI + (variante - 0.5) * 0.3;
+    const lg = L * (0.75 + ((i * 37) % 5) * 0.05);
+    const fx = tete.x + Math.cos(a) * lg;
+    const fy = tete.y + Math.sin(a) * lg * 0.55 + L * 0.28;
+    for (const [coul, ep] of [['#2f6a3a', 0.16], ['#4f9a4a', 0.1]] as const) {
+      x.strokeStyle = coul;
+      x.lineWidth = L * ep;
+      x.lineCap = 'round';
+      x.beginPath();
+      x.moveTo(tete.x, tete.y);
+      x.quadraticCurveTo(tete.x + Math.cos(a) * lg * 0.5, tete.y - L * 0.25, fx, fy);
+      x.stroke();
+    }
+    x.strokeStyle = rgba('#a3d97c', 0.7);
+    x.lineWidth = Math.max(1, L * 0.025);
+    x.beginPath();
+    x.moveTo(tete.x, tete.y - L * 0.02);
+    x.quadraticCurveTo(tete.x + Math.cos(a) * lg * 0.5, tete.y - L * 0.27, fx, fy - L * 0.03);
+    x.stroke();
+  }
+  for (let i = 0; i < 3; i++) disque(x, tete.x - L * 0.08 + i * L * 0.08, tete.y + L * 0.1, L * 0.06, '#c0622a');
+  disque(x, tete.x, tete.y, L * 0.1, '#3f7a3c');
 }

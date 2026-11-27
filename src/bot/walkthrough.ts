@@ -17,8 +17,10 @@ export const REPOS: readonly PointRepos[] = [
   { carte: 'maison_ael', ancre: 'O', si: ['!acte2'] },
   { carte: 'col', ancre: 'J', si: ['!acte2'] },
   { carte: 'clairval', ancre: 'H', si: ['!acte2'] },
-  { carte: 'port', ancre: 'H', si: ['acte2'] },
-  { carte: 'recifs', ancre: 'M', si: ['acte2'] },
+  { carte: 'port', ancre: 'H', si: ['acte2', '!acte3'] },
+  { carte: 'recifs', ancre: 'M', si: ['acte2', '!acte3'] },
+  { carte: 'ambrelune', ancre: 'H', si: ['acte3'] },
+  { carte: 'canyon', ancre: 'K', si: ['acte3'] },
 ];
 
 export const ACTE1: readonly Etape[] = [
@@ -77,4 +79,40 @@ export const ACTE2: readonly Etape[] = [
   { type: 'parler', carte: 'phare', ancre: 'N', jusqua: 'acte2_fini' },
 ];
 
-export const AVENTURE: readonly Etape[] = [...ACTE1, ...ACTE2];
+export const ACTE3: readonly Etape[] = [
+  { type: 'parler', carte: 'ambrelune', ancre: 'J', jusqua: 'amastan_vu' },
+  { type: 'coffres', carte: 'ambrelune' },
+  { type: 'parler', carte: 'ambrelune', ancre: 'H', jusqua: 'quete_puits' },
+  { type: 'parler', carte: 'ambrelune', ancre: 'I', jusqua: 'quete_tablettes' },
+  { type: 'boutique', carte: 'ambrelune', ancre: 'G' },
+  { type: 'boutique', carte: 'ambrelune', ancre: 'F' },
+  { type: 'parler', carte: 'dunes', ancre: 'M', jusqua: 'omar_aide' },
+  { type: 'interagir', carte: 'dunes', ancre: '1', jusqua: 'puits1', niveau: 18 },
+  { type: 'interagir', carte: 'dunes', ancre: '2', jusqua: 'puits2' },
+  { type: 'interagir', carte: 'dunes', ancre: '3', jusqua: 'puits3' },
+  { type: 'coffres', carte: 'dunes' },
+  { type: 'parler', carte: 'ambrelune', ancre: 'H', jusqua: 'puits_rendus' },
+  { type: 'aller', carte: 'ruines', ancre: 'D', jusqua: 'nour_rejointe', niveau: 19 },
+  { type: 'interagir', carte: 'ruines', ancre: '1', jusqua: 'miroir1' },
+  { type: 'interagir', carte: 'ruines', ancre: '2', jusqua: 'miroir2' },
+  { type: 'interagir', carte: 'ruines', ancre: '3', jusqua: 'miroir3' },
+  { type: 'coffres', carte: 'ruines' },
+  { type: 'interagir', carte: 'tombeau', ancre: '1', jusqua: 'levier_t1', niveau: 20 },
+  { type: 'interagir', carte: 'tombeau', ancre: '2', jusqua: 'levier_t2' },
+  { type: 'coffres', carte: 'tombeau' },
+  { type: 'aller', carte: 'tombeau', ancre: 'D', jusqua: 'colosse_vaincu', niveau: 23 },
+  { type: 'interagir', carte: 'tombeau', ancre: 'A', jusqua: 'astrolabe_obtenu' },
+  { type: 'boutique', carte: 'ambrelune', ancre: 'G' },
+  { type: 'boutique', carte: 'ambrelune', ancre: 'M' },
+  { type: 'parler', carte: 'canyon', ancre: 'K', jusqua: 'quete_ver' },
+  { type: 'parler', carte: 'canyon', ancre: 'M', jusqua: 'silhouette_vue' },
+  { type: 'coffres', carte: 'canyon' },
+  { type: 'parler', carte: 'ambrelune', ancre: 'I', jusqua: 'tablettes_rendues' },
+  { type: 'boutique', carte: 'ambrelune', ancre: 'G' },
+  { type: 'coffres', carte: 'fanal_sables' },
+  { type: 'aller', carte: 'fanal_sables', ancre: 'D', jusqua: 'mirage_vaincu', niveau: 26 },
+  { type: 'interagir', carte: 'dunes', ancre: 'O', jusqua: 'ver_vaincu', niveau: 28 },
+  { type: 'interagir', carte: 'fanal_sables', ancre: '1', jusqua: 'acte3_fini' },
+];
+
+export const AVENTURE: readonly Etape[] = [...ACTE1, ...ACTE2, ...ACTE3];

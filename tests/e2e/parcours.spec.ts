@@ -81,7 +81,7 @@ test('combat joué au doigt jusqu’à la victoire', async ({ page }) => {
   expect(erreurs).toEqual([]);
 });
 
-test('aventure complète (Actes I et II) puis sauvegarde de la fin', async ({ page }) => {
+test('aventure complète (Actes I à III) puis sauvegarde de la fin', async ({ page }) => {
   test.setTimeout(400_000);
   const erreurs = await surveillerErreurs(page);
   await nouvellePartie(page);
@@ -90,12 +90,13 @@ test('aventure complète (Actes I et II) puis sauvegarde de la fin', async ({ pa
   const s = await etat(page);
   expect(s.flags).toContain('kraken_vaincu');
   expect(s.flags).toContain('acte2_fini');
-  expect(s.niveau).toBeGreaterThanOrEqual(15);
+  expect(s.flags).toContain('acte3_fini');
+  expect(s.niveau).toBeGreaterThanOrEqual(26);
   // L'interface reprend la main sur l'état final : quelques images, puis sauvegarde.
   await page.waitForTimeout(600);
   await page.locator('.hud-menu').click();
   await page.locator('.onglet', { hasText: 'Sauver' }).click();
   await page.locator('.ligne-objet', { hasText: 'Carnet 2' }).click();
-  await expect(page.locator('.ligne-objet', { hasText: 'Carnet 2' })).toContainText('Acte 2');
+  await expect(page.locator('.ligne-objet', { hasText: 'Carnet 2' })).toContainText('Acte 3');
   expect(erreurs).toEqual([]);
 });

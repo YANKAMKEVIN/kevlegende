@@ -9,6 +9,7 @@ export const APP_HEROS: Record<string, Apparence> = {
   ael: { peau: '#f2c9a0', cheveux: '#6b4426', tenue: '#2f7f8f', accent: '#f2b84b', coiffure: 'courte' },
   mira: APP.mira,
   brann: APP.brann,
+  nour: APP.nour,
 };
 
 const cache = new Map<string, HTMLCanvasElement>();

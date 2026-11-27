@@ -19,12 +19,21 @@ const L: SkillDef[] = [
   { id: 'eveil', nom: 'Éveil', desc: 'Relève un allié tombé.', cout: 10, cible: 'allieKO', type: 'reveil', element: 'lumiere', puissance: 10 },
   { id: 'purification', nom: 'Purification', desc: 'Soigne et retire les altérations.', cout: 5, cible: 'allie', type: 'soin', element: 'lumiere', puissance: 12, purifie: true },
   { id: 'pluie_fleches', nom: 'Pluie de Flèches', desc: 'Arrose tous les ennemis. Eau.', cout: 12, cible: 'ennemis', type: 'magique', element: 'eau', puissance: 13 },
+  { id: 'benediction', nom: 'Bénédiction', desc: 'Soigne largement tout le groupe.', cout: 14, cible: 'allies', type: 'soin', element: 'lumiere', puissance: 22 },
   // --- Brann, forgeron du port ---
   { id: 'coup_marteau', nom: 'Coup de Marteau', desc: 'Un coup lourd. Terre.', cout: 3, cible: 'ennemi', type: 'physique', element: 'terre', puissance: 16 },
   { id: 'rempart', nom: 'Rempart', desc: 'Protège tout le groupe pendant 3 tours.', cout: 6, cible: 'allies', type: 'soutien', element: 'neutre', puissance: 0, statut: { id: 'protege', chance: 1, tours: 3 } },
   { id: 'braise', nom: 'Braise', desc: 'Projette des escarbilles. Feu, tous.', cout: 7, cible: 'ennemis', type: 'magique', element: 'feu', puissance: 11 },
   { id: 'seisme', nom: 'Séisme', desc: 'Fend le sol. Terre, tous.', cout: 12, cible: 'ennemis', type: 'physique', element: 'terre', puissance: 15 },
+  { id: 'forge_ardente', nom: 'Forge Ardente', desc: 'Un coup chauffé à blanc. Feu.', cout: 10, cible: 'ennemi', type: 'physique', element: 'feu', puissance: 24 },
   { id: 'cri_forge', nom: 'Cri de Forge', desc: 'Affaiblit un ennemi pendant 3 tours.', cout: 4, cible: 'ennemi', type: 'soutien', element: 'neutre', puissance: 0, statut: { id: 'affaibli', chance: 0.9, tours: 3 } },
+  { id: 'tempete_lames', nom: 'Tempête de Lames', desc: 'Un cyclone de coups. Vent, tous.', cout: 15, cible: 'ennemis', type: 'physique', element: 'vent', puissance: 16 },
+  // --- Nour, astromancienne des sables ---
+  { id: 'eclat_solaire', nom: 'Éclat Solaire', desc: 'Un rayon de soleil concentré. Lumière.', cout: 4, cible: 'ennemi', type: 'magique', element: 'lumiere', puissance: 15 },
+  { id: 'tempete_sable', nom: 'Tempête de Sable', desc: 'Fouette tous les ennemis. Terre.', cout: 8, cible: 'ennemis', type: 'magique', element: 'terre', puissance: 11 },
+  { id: 'voile_etoile', nom: "Voile d'Étoiles", desc: 'Accélère tout le groupe pendant 2 tours.', cout: 14, cible: 'allies', type: 'soutien', element: 'neutre', puissance: 0, statut: { id: 'hate', chance: 1, tours: 2 } },
+  { id: 'etoile_filante', nom: 'Étoile Filante', desc: 'Une étoile tombe sur un ennemi. Lumière.', cout: 13, cible: 'ennemi', type: 'magique', element: 'lumiere', puissance: 27 },
+  { id: 'nova', nom: 'Nova', desc: 'Un soleil éclate au-dessus des ennemis. Lumière, tous.', cout: 20, cible: 'ennemis', type: 'magique', element: 'lumiere', puissance: 19 },
   // --- Ennemis ---
   { id: 'e_charge', nom: 'Charge', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 11 },
   { id: 'e_morsure', nom: 'Morsure', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 13 },
@@ -45,6 +54,12 @@ const L: SkillDef[] = [
   { id: 'e_vol', nom: 'Larcin', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 7 },
   { id: 'e_tentacules', nom: 'Tentacules', desc: '', cout: 0, cible: 'ennemis', type: 'physique', element: 'eau', puissance: 12 },
   { id: 'e_maree', nom: 'Marée Noire', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'eau', puissance: 15, statut: { id: 'poison', chance: 0.3, tours: 3 } },
+  { id: 'e_tempete', nom: 'Tempête de Sable', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'terre', puissance: 13, statut: { id: 'affaibli', chance: 0.2, tours: 2 } },
+  { id: 'e_rayon', nom: 'Rayon Ardent', desc: '', cout: 0, cible: 'ennemi', type: 'magique', element: 'feu', puissance: 20 },
+  { id: 'e_mirage', nom: 'Mirage', desc: '', cout: 0, cible: 'ennemi', type: 'magique', element: 'ombre', puissance: 18, statut: { id: 'sommeil', chance: 0.3, tours: 2 } },
+  { id: 'e_soif', nom: 'Soif Brûlante', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'feu', puissance: 14, statut: { id: 'poison', chance: 0.3, tours: 3 } },
+  { id: 'e_seisme', nom: 'Secousse', desc: '', cout: 0, cible: 'ennemis', type: 'physique', element: 'terre', puissance: 15 },
+  { id: 'e_engloutir', nom: 'Engloutir', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 26 },
 ];
 
 export const SKILLS: Readonly<Record<string, SkillDef>> = Object.fromEntries(L.map((s) => [s.id, s]));

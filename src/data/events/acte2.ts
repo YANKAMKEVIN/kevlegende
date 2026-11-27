@@ -1,9 +1,24 @@
 // Acte II : Port-Venteux, les Récifs Célestes, l'Épave du Fendeur et le Phare des Récifs.
-import type { Script } from '../../core/story/script';
+import type { Cmd, Script } from '../../core/story/script';
 
 const A = 'Aël';
 const M = 'Mira';
 const B = 'Brann';
+
+const VOILE: Cmd = { c: 'son', id: 'voile' };
+const VERS = {
+  port: { texte: 'Voguer vers Port-Venteux', faire: [VOILE, { c: 'teleporte', carte: 'port', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Cap sur Port-Venteux !' }] },
+  clairval: { texte: 'Voguer vers Clairval', faire: [VOILE, { c: 'teleporte', carte: 'clairval', ancre: 'X', dir: 'haut' }, { c: 'dit', texte: 'Le courant de vent vous ramène à Clairval.' }] },
+  ambrelune: { texte: 'Voguer vers Ambrelune', faire: [VOILE, { c: 'teleporte', carte: 'ambrelune', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Le Moineau file vers les dunes dorées.' }] },
+} satisfies Record<string, { texte: string; faire: Cmd[] }>;
+
+/** Le Moineau : les caps proposés dépendent de l'avancée de l'histoire. */
+function moineau(texte: string, rester: string, a: keyof typeof VERS, b: keyof typeof VERS): Script {
+  const r = { texte: rester, faire: [] };
+  return [
+    { c: 'si', cond: ['acte3'], alors: [{ c: 'choix', texte, options: [r, VERS[a], VERS[b]] }], sinon: [{ c: 'choix', texte, options: [r, VERS[a]] }] },
+  ];
+}
 
 export const ACTE2: Record<string, Script> = {
   acte2_debut: [
@@ -19,18 +34,8 @@ export const ACTE2: Record<string, Script> = {
     { c: 'soin' },
     { c: 'sauve' },
   ],
-  moineau: [
-    { c: 'choix', texte: 'Le Moineau, le petit voilier de tes parents. Où mettre le cap ?', options: [
-      { texte: 'Rester à Port-Venteux', faire: [] },
-      { texte: 'Voguer vers Clairval', faire: [{ c: 'son', id: 'voile' }, { c: 'teleporte', carte: 'clairval', ancre: 'X', dir: 'haut' }, { c: 'dit', texte: 'Le courant de vent vous ramène à Clairval.' }] },
-    ] },
-  ],
-  moineau_clairval: [
-    { c: 'choix', texte: 'Le Moineau attend, voile gonflée. Où mettre le cap ?', options: [
-      { texte: 'Rester à Clairval', faire: [] },
-      { texte: 'Voguer vers Port-Venteux', faire: [{ c: 'son', id: 'voile' }, { c: 'teleporte', carte: 'port', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Cap sur Port-Venteux !' }] },
-    ] },
-  ],
+  moineau: moineau('Le Moineau, le petit voilier de tes parents. Où mettre le cap ?', 'Rester à Port-Venteux', 'clairval', 'ambrelune'),
+  moineau_clairval: moineau('Le Moineau attend, voile gonflée. Où mettre le cap ?', 'Rester à Clairval', 'port', 'ambrelune'),
   maelle: [
     { c: 'si', cond: ['fanal2_allume'], alors: [
       { c: 'dit', qui: 'Maëlle', portrait: 'maelle', texte: 'Les voiles reviennent au port ! Port-Venteux ne t’oubliera pas, Aël de Clairval.' },
@@ -193,7 +198,12 @@ export const ACTE2: Record<string, Script> = {
   ],
   fin_acte2: [
     { c: 'si', cond: ['acte2_fini'], alors: [
-      { c: 'dit', qui: 'Nell', portrait: 'nell', texte: 'La suite de votre route vous attend. Le Moineau peut vous porter vers les Sables d’Ambre dès qu’ils seront prêts.' },
+      { c: 'si', cond: ['acte3'], alors: [
+        { c: 'dit', qui: 'Nell', portrait: 'nell', texte: 'Le Phare veille sur vous. Les Sables d’Ambre comptent sur vous, maintenant.' },
+      ], sinon: [
+        { c: 'dit', qui: 'Nell', portrait: 'nell', texte: 'Le Moineau est prêt. Les Sables d’Ambre vous attendent.' },
+        { c: 'appel', evenement: 'acte3_debut' },
+      ] },
     ], sinon: [
       { c: 'dit', qui: '???', portrait: 'roi', texte: '« Deux… Tu es têtu, petit voilier. Mais les Sables d’Ambre sont à moi depuis bien longtemps. Viens donc t’y perdre. »' },
       { c: 'dit', qui: 'Nell', portrait: 'nell', texte: 'Les Sables d’Ambre… L’île du désert, au sud. Son Fanal est éteint depuis une semaine. Je l’ai vu mourir d’ici.' },
@@ -201,7 +211,7 @@ export const ACTE2: Record<string, Script> = {
       { c: 'titre', texte: 'Fin de l’Acte II', sous: 'Deux Fanaux brillent sur Aérys' },
       { c: 'flag', nom: 'acte2_fini' },
       { c: 'sauve' },
-      { c: 'fin', texte: "L'Acte III, « Les Sables d'Ambre », arrive bientôt. Ta sauvegarde t'attendra : continue d'explorer, termine les quêtes secondaires et renforce ton équipe." },
+      { c: 'appel', evenement: 'acte3_debut' },
     ] },
   ],
 };
