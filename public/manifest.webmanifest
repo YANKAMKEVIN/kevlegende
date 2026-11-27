@@ -1,0 +1,11 @@
+{
+  "name": "Kevlegende",
+  "short_name": "Kevlegende",
+  "description": "RPG d'aventure sur des îles flottantes : rallumez les Fanaux de la Brume.",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#1a1424",
+  "theme_color": "#2b2233",
+  "icons": [{ "src": "icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
