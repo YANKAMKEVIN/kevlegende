@@ -26,6 +26,34 @@ def detourer(im):
     rgba=im.convert('RGBA'); rgba.putalpha(alpha)
     bb=alpha.point(lambda v:255 if v>20 else 0).getbbox()
     return rgba.crop(bb) if bb else rgba
+def trous(fond, mask, mini):
+    # Creux fermés (entre une queue et un corps, sous un bras…) : les grandes zones blanches enclavées sont aussi du fond.
+    h,w=fond.shape; vu=mask.copy()
+    for y0 in range(h):
+        for x0 in range(w):
+            if not fond[y0,x0] or vu[y0,x0]: continue
+            zone=[(y0,x0)]; vu[y0,x0]=True; i=0
+            while i<len(zone):
+                y,x=zone[i]; i+=1
+                for dy,dx in ((1,0),(-1,0),(0,1),(0,-1)):
+                    ny,nx=y+dy,x+dx
+                    if 0<=ny<h and 0<=nx<w and fond[ny,nx] and not vu[ny,nx]:
+                        vu[ny,nx]=True; zone.append((ny,nx))
+            if len(zone)>=mini:
+                for y,x in zone: mask[y,x]=True
+if __name__=='__main__' and os.environ.get('REPARER'):
+    # REPARER=1 python3 convertir.py fichiers.webp… : retire les creux blancs d'illustrations déjà converties.
+    import sys
+    for f in sys.argv[1:]:
+        im=Image.open(f).convert('RGBA'); a=np.asarray(im).astype(np.int16)
+        mn=a[...,:3].min(2); mx=a[...,:3].max(2)
+        fond=(a[...,3]>200)&(mn>225)&((mx-mn)<26)
+        mask=np.zeros(fond.shape,bool); trous(fond,mask,int(fond.size*0.0015))
+        al=np.where(mask,0,a[...,3]).astype(np.uint8)
+        al=np.asarray(Image.fromarray(al).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8)))
+        al=np.minimum(al,a[...,3]).astype(np.uint8)
+        im.putalpha(Image.fromarray(al)); im.save(f,quality=86,method=6); print(f, int(mask.sum()))
+    sys.exit(0)
 for f in sorted(glob.glob('out/*.png')):
     n=os.path.basename(f)[:-4]; im=Image.open(f)
     if n.startswith('ennemi_'):
