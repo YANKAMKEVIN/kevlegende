@@ -52,3 +52,17 @@ export function fondCombat(carte: string): string {
   };
   return `fond_${table[carte] ?? 'village'}`;
 }
+
+/** Toutes les illustrations du jeu (pour le préchargement en tâche de fond). */
+export const ARTS: readonly string[] = [
+  'titre',
+  ...['ael', 'mira', 'brann', 'odile', 'fendril', 'tilda', 'rosa', 'fenouil', 'bertille', 'pim', 'gus', 'oswin', 'tobias', 'pip', 'maelle', 'marin', 'nell', 'creux', 'roi', 'sentinelle', 'villageois', 'villageoise'].map((p) => `portrait_${p}`),
+  ...['village', 'bois', 'col', 'grotte', 'colline', 'port', 'recifs', 'epave', 'phare'].map((f) => `fond_${f}`),
+];
+
+/** Précharge les portraits puis les décors, quelques images à la fois, sans gêner le jeu. */
+export async function prechargerTout(ennemis: readonly string[]): Promise<void> {
+  const file = [...ARTS, ...ennemis.map((e) => `ennemi_${e}`)];
+  const lot = 4;
+  for (let i = 0; i < file.length; i += lot) await Promise.all(file.slice(i, i + lot).map(chargerArt));
+}

@@ -5,7 +5,8 @@ import type { Attente, Effet } from '../core/story/script';
 import { hero } from '../data/heroes';
 import { MONDE } from '../data/monde';
 import { Controles, type Bouton } from '../input/controles';
-import { chargerArt } from '../render/assets';
+import { chargerArt, prechargerTout } from '../render/assets';
+import { ENEMIES } from '../data/enemies';
 import { Scene } from '../render/scene';
 import { deballer } from '../save/schema';
 import { exporter, importer, Sauvegardes, type Emplacement } from '../save/store';
@@ -85,7 +86,10 @@ export class App {
     });
     this.redimensionner();
     this.appliquerOptions();
-    for (const id of ['titre', 'portrait_ael', 'portrait_odile', 'portrait_mira']) void chargerArt(id);
+    void chargerArt('titre').then(() => {
+      if (this.ecran === 'titre') this.titre.ouvrir(this.rappelsTitre());
+      return prechargerTout(Object.keys(ENEMIES));
+    });
   }
 
   jeu(): Jeu {
@@ -246,7 +250,6 @@ export class App {
   }
 
   private directionMenus(): void {
-    // Navigation au clavier dans les menus : on transforme les nouvelles pressions en pas de liste.
     const d = this.ctl.direction();
     if (d && d !== this.derniereDir) {
       if (this.menuOuvert) this.menu.dir(d);
@@ -315,10 +318,8 @@ export class App {
           this.scene.flash = { couleur: e.couleur, t: 0.6 };
           break;
         case 'objet':
-          this.audio.son('objet');
-          break;
         case 'or':
-          if (e.n > 0) this.audio.son('achat');
+          this.audio.son(e.type === 'objet' ? 'objet' : e.n > 0 ? 'achat' : 'menu');
           break;
         case 'rejoint':
           this.audio.son('niveau');

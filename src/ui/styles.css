@@ -185,7 +185,7 @@ body { font-family: var(--texte); color: var(--encre); user-select: none; -webki
 .res-carte .nouvelle { color: var(--prune); }
 
 /* ---------- Titre et cartons ---------- */
-.titre { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: calc(8vh + var(--sa-haut)) 16px calc(16px + var(--sa-bas)); }
+.titre { position: absolute; inset: 0; isolation: isolate; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: calc(8vh + var(--sa-haut)) 16px calc(16px + var(--sa-bas)); }
 .titre-fond { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: -1; }
 .titre-fond::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(26,20,36,0.1), rgba(26,20,36,0) 40%, rgba(26,20,36,0.55)); }
 .titre-logo { text-align: center; }

@@ -121,13 +121,13 @@ export class VueCombat {
       const def = ENEMIES[c.ref];
       const s = base * (c.boss ? 1.75 : 1) * (def?.forme === 'serpent' && c.boss ? 1.1 : 1);
       const n = ennemis.length;
-      const x = w * (n === 1 ? 0.3 : 0.14 + (i / Math.max(1, n - 1)) * 0.3);
-      const y = sol + (i % 2) * h * 0.06 - (n === 1 ? 0 : h * 0.03);
+      const x = w * (n === 1 ? 0.3 : portrait ? 0.13 + (i / Math.max(1, n - 1)) * 0.26 : 0.14 + (i / Math.max(1, n - 1)) * 0.3);
+      const y = sol + (i % 2) * h * (portrait ? 0.09 : 0.06) - (n === 1 ? 0 : h * 0.03);
       this.pos.set(c.uid, { x, y, s });
     });
     heros.forEach((c, i) => {
-      const s = base * 0.85;
-      this.pos.set(c.uid, { x: w * (portrait ? 0.62 + i * 0.13 : 0.66 + i * 0.1), y: sol - h * 0.06 + i * h * (portrait ? 0.05 : 0.08), s });
+      const s = base * (portrait ? 0.78 : 0.85);
+      this.pos.set(c.uid, { x: w * (portrait ? 0.7 + i * 0.1 : 0.66 + i * 0.1), y: sol - h * 0.06 + i * h * (portrait ? 0.05 : 0.08), s });
     });
     const ordre = [...b.combattants].sort((a, c) => this.pos.get(a.uid)!.y - this.pos.get(c.uid)!.y);
     for (const c of ordre) this.combattant(ctx, c);
@@ -245,21 +245,42 @@ export class VueCombat {
       if (v.brise) this.etoiles(ctx, x, p.y - s, s);
       this.barreEnnemi(ctx, c, v, x, p.y + 8, s);
     } else {
+      const ko = c.pv <= 0 && v.pv <= 0;
+      const img = art(`portrait_${c.ref}`);
       const app = APP_HEROS[c.ref];
-      if (app) {
+      const s = p.s * 0.95;
+      ellipse(ctx, x, p.y, s * 0.42, s * 0.1, rgba('#000000', 0.3));
+      if (img) {
+        // Médaillon peint : le héros fait face aux ennemis, cadré dans un blason crème.
+        const y0 = p.y - s * 1.02 + (ko ? s * 0.25 : respire);
+        ctx.save();
+        if (ko) ctx.filter = 'grayscale(1) brightness(0.7)';
+        ctx.fillStyle = '#2b2233';
+        ctx.beginPath();
+        ctx.roundRect(x - s / 2 - 4, y0 - 4, s + 8, s + 8, s * 0.22);
+        ctx.fill();
+        ctx.fillStyle = c.uid === this.acteur ? '#f2b84b' : '#fff6e5';
+        ctx.beginPath();
+        ctx.roundRect(x - s / 2 - 1, y0 - 1, s + 2, s + 2, s * 0.2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.roundRect(x - s / 2 + 3, y0 + 3, s - 6, s - 6, s * 0.17);
+        ctx.clip();
+        ctx.drawImage(img, x - s / 2 + 3, y0 + 3, s - 6, s - 6);
+        if (v.flash > 0) {
+          ctx.fillStyle = rgba('#ff6a6a', v.flash * 0.45);
+          ctx.fillRect(x - s / 2, y0, s, s);
+        }
+        ctx.restore();
+      } else if (app) {
         const sp = spritePerso(app, 'gauche', v.elan > 0 ? 1 : 0, 128);
         const k = p.s / 64;
-        const koRot = c.pv <= 0 && v.pv <= 0;
         ctx.translate(x, p.y);
-        if (koRot) {
+        if (ko) {
           ctx.rotate(-Math.PI / 2);
           ctx.globalAlpha = 0.7;
         }
-        ctx.drawImage(sp, -32 * k, -96 * k + (koRot ? 0 : respire), 64 * k, 96 * k);
-        if (v.flash > 0) {
-          ctx.fillStyle = rgba('#ff6a6a', v.flash * 0.35);
-          ctx.fillRect(-32 * k, -96 * k, 64 * k, 96 * k);
-        }
+        ctx.drawImage(sp, -32 * k, -96 * k + (ko ? 0 : respire), 64 * k, 96 * k);
       }
     }
     ctx.restore();
@@ -282,7 +303,7 @@ export class VueCombat {
   }
 
   private barreEnnemi(ctx: CanvasRenderingContext2D, c: Combattant, v: EtatVisuel, x: number, y: number, s: number): void {
-    const w = Math.max(70, s * 0.6);
+    const w = Math.max(54, Math.min(s * 0.6, 76));
     ctx.fillStyle = 'rgba(20,14,30,0.75)';
     ctx.beginPath();
     ctx.roundRect(x - w / 2 - 3, y - 3, w + 6, 26, 8);
