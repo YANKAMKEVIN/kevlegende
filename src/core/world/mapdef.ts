@@ -1,7 +1,7 @@
 // Format des cartes écrites à la main : un plan ASCII + des objets posés sur des ancres.
 import type { Dir } from '../types';
 
-export type Ambiance = 'jour' | 'aube' | 'crepuscule' | 'nuit' | 'grotte' | 'interieur' | 'brume' | 'desert' | 'neige';
+export type Ambiance = 'jour' | 'aube' | 'crepuscule' | 'nuit' | 'grotte' | 'interieur' | 'brume' | 'desert' | 'neige' | 'pale';
 
 /** Condition : liste de drapeaux, « !x » = drapeau absent. Toutes doivent être vraies. */
 export type Cond = readonly string[];
@@ -52,7 +52,8 @@ export type PropType =
   | 'autel' | 'levier' | 'grille' | 'lanterne' | 'grand_arbre' | 'etal' | 'enclume' | 'navire'
   | 'porte_grotte' | 'cristaux' | 'herbe_lune' | 'mat' | 'filet' | 'moulin' | 'tente' | 'souche'
   | 'maison_ocre' | 'obelisque' | 'jarre' | 'miroir' | 'colonne' | 'ossements' | 'tourbillon' | 'sarcophage'
-  | 'chalet' | 'bonhomme' | 'brasero' | 'statue_glace' | 'yak' | 'traineau' | 'bloc_glace' | 'blizzard' | 'coeur_glace';
+  | 'chalet' | 'bonhomme' | 'brasero' | 'statue_glace' | 'yak' | 'traineau' | 'bloc_glace' | 'blizzard' | 'coeur_glace'
+  | 'dormeur' | 'portail_pale' | 'cloche' | 'trone' | 'arbre_lune';
 
 export interface PropDef {
   type: PropType;

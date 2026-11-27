@@ -15,10 +15,10 @@ try {
     bot.etape(e);
     bot.seReposer(0.4);
     etape++;
-    if ('jusqua' in e && e.jusqua && ['mira_rejoint', 'serpent_vaincu', 'fanal1_allume', 'creux_vaincu', 'kraken_vaincu', 'acte3_fini', 'aubin_vu', 'yeti_vaincu', 'serpent_givre_vaincu', 'chevalier_vaincu', 'braises_reunies', 'reflet_vaincu', 'wyverne_vaincue', 'acte4_fini'].includes(e.jusqua))
+    if ('jusqua' in e && e.jusqua && ['mira_rejoint', 'serpent_vaincu', 'fanal1_allume', 'creux_vaincu', 'kraken_vaincu', 'acte3_fini', 'aubin_vu', 'yeti_vaincu', 'serpent_givre_vaincu', 'chevalier_vaincu', 'braises_reunies', 'reflet_vaincu', 'wyverne_vaincue', 'acte4_fini', 'passeur_vaincu', 'cloche_vaincue', 'ronce_vaincue', 'senechal_vaincu', 'roi_apaise', 'leviathan_vaincu', 'acte5_fini'].includes(e.jusqua))
       console.log(`✓ ${e.jusqua} — niveaux ${j.p.equipe.map((h) => `${h.id}:${h.niveau}`).join(' ')} — combats ${bot.journal.combats}, défaites ${bot.journal.defaites}, or ${j.p.or}`);
   }
 } catch (e) {
   console.error(`ÉCHEC à l étape ${etape} :`, (e as Error).message, j.mode, j.p.carte, j.p.x, j.p.y, j.p.dir, j.p.equipe.map((h) => h.pv), JSON.stringify(j.p.flags));
 }
-console.log({ ...bot.journal, ms: Date.now() - t0, flagsFin: !!j.p.flags['acte4_fini'] });
+console.log({ ...bot.journal, ms: Date.now() - t0, flagsFin: !!j.p.flags['acte5_fini'] });

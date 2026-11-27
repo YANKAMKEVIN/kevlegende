@@ -8,6 +8,9 @@ import { ACTE3_AMBRELUNE } from './events/acte3_ambrelune';
 import { ACTE3_AVENTURE } from './events/acte3_aventure';
 import { ACTE4_AVENTURE } from './events/acte4_aventure';
 import { ACTE4_GIVREBOURG } from './events/acte4_givrebourg';
+import { ACTE5_AVENTURE } from './events/acte5_aventure';
+import { ACTE5_BORDEBRUME } from './events/acte5_bordebrume';
+import { ACTE5_FINAL } from './events/acte5_final';
 import { CARTES } from './maps';
 
 const QUETES: QuestDef[] = [
@@ -28,12 +31,17 @@ const QUETES: QuestDef[] = [
   { id: 'q_yaks', nom: 'Le troupeau dispersé', desc: 'Retrouver les trois yacks de Joris égarés sur les Pentes Blanches.', acte: 4, principale: false },
   { id: 'q_fleurs', nom: 'Fleurs-de-givre', desc: 'Rapporter trois fleurs-de-givre à Mère Agathe, l’herboriste.', acte: 4, principale: false },
   { id: 'q_wyverne', nom: 'La Wyverne blanche', desc: "Vaincre la Wyverne qui niche sur la corniche du Col du Blizzard, pour Hélène.", acte: 4, principale: false },
+  { id: 'q_royaume', nom: 'Le Fanal Premier', desc: 'Descendre sous la Brume, affronter le Roi Pâle et rallumer le Fanal Premier.', acte: 5, principale: true },
+  { id: 'q_souvenirs', nom: 'Les souvenirs de Lune', desc: 'Retrouver la couronne, la boîte à musique et le portrait de Lune pour ouvrir le palais.', acte: 5, principale: true },
+  { id: 'q_dormeurs', nom: 'Les Veilleurs endormis', desc: 'Réveiller les trois Veilleurs endormis dans Aubefonde, pour Tristan.', acte: 5, principale: false },
+  { id: 'q_pages', nom: 'Le journal du roi', desc: 'Retrouver les trois pages arrachées du journal du roi Morvane, pour Basile.', acte: 5, principale: false },
+  { id: 'q_leviathan', nom: 'Le Léviathan de Brume', desc: "Vaincre le Léviathan de la grande mare du Rivage Pâle, pour Ambroise.", acte: 5, principale: false },
   { id: 'q_ver', nom: 'Le Ver Ancien', desc: 'Réveiller et vaincre le Ver Ancien, sous les ossements des dunes, pour Kahina.', acte: 3, principale: false },
 ];
 
 export const MONDE: Monde = {
   cartes: CARTES,
-  evenements: { ...ACTE1_CLAIRVAL, ...ACTE1_AVENTURE, ...ACTE2, ...ACTE3_AMBRELUNE, ...ACTE3_AVENTURE, ...ACTE4_GIVREBOURG, ...ACTE4_AVENTURE },
+  evenements: { ...ACTE1_CLAIRVAL, ...ACTE1_AVENTURE, ...ACTE2, ...ACTE3_AMBRELUNE, ...ACTE3_AVENTURE, ...ACTE4_GIVREBOURG, ...ACTE4_AVENTURE, ...ACTE5_BORDEBRUME, ...ACTE5_AVENTURE, ...ACTE5_FINAL },
   boutiques: {
     clairval: { nom: "L'Échoppe de Tilda", articles: ['herbe_douce', 'sel_ecume', 'gouttes_ciel', 'bombe_braise', 'fiole_givre', 'sabre_voile', 'arc_saule', 'veste_cuir'] },
     port_provisions: { nom: 'Provisions de Corentin', articles: ['herbe_douce', 'tonique', 'gouttes_ciel', 'sel_ecume', 'plume_aube', 'bombe_braise', 'fiole_givre', 'galet_tonnerre'] },
@@ -45,11 +53,21 @@ export const MONDE: Monde = {
     givrebourg_provisions: { nom: "L'Épicerie de Gaspard", articles: ['tonique', 'datte_miel', 'soupe_chaude', 'eau_oasis', 'the_epices', 'plume_aube', 'braise_vive', 'elixir_soleil', 'sel_ecume'] },
     givrebourg_armes: { nom: "La Forge d'Inès", articles: ['epee_aurore', 'arc_boreal', 'marteau_braise', 'baton_polaire', 'manteau_fourrure', 'armure_givre', 'gants_laine', 'collier_scarabee'] },
     col: { nom: "Le Camp d'Hélène", articles: ['soupe_chaude', 'the_epices', 'plume_aube', 'braise_vive', 'elixir_aurore'] },
+    bordebrume_provisions: { nom: "L'Échoppe de Corin", articles: ['soupe_chaude', 'lait_lune', 'the_epices', 'rosee_etoile', 'plume_aube', 'eclat_lumiere', 'braise_vive', 'elixir_aurore', 'larme_fanal'] },
+    bordebrume_armes: { nom: "L'Arsenal d'Ysé", articles: ['arc_lunaire', 'sceptre_lune', 'cape_veilleur', 'medaillon_veilleur', 'gants_laine', 'armure_givre', 'epee_aurore', 'marteau_braise'] },
+    camp_veilleur: { nom: 'Le Camp de Tristan', articles: ['lait_lune', 'rosee_etoile', 'plume_aube', 'eclat_lumiere', 'larme_fanal'] },
     canyon: { nom: 'Le Camp de Kahina', articles: ['tonique', 'datte_miel', 'eau_oasis', 'plume_aube', 'perle_pluie', 'elixir_soleil'] },
   },
   quetes: Object.fromEntries(QUETES.map((q) => [q.id, q])),
   objectifs: [
-    { si: ['acte4_fini'], texte: "L'Acte V arrive bientôt. Termine les quêtes des Cimes de Givre en attendant !" },
+    { si: ['acte5_fini'], texte: "Les cinq Fanaux brillent. Le Léviathan et les dernières quêtes des Veilleurs t'attendent encore !" },
+    { si: ['roi_apaise'], texte: 'Approcher la lanterne du Fanal Premier, derrière le trône.' },
+    { si: ['senechal_vaincu'], texte: 'Monter jusqu’à la salle du trône et affronter le Roi Pâle.' },
+    { si: ['portail_ouvert'], texte: 'Traverser le Palais Pâle jusqu’au grand escalier.' },
+    { si: ['souvenir1', 'souvenir2', 'souvenir3'], texte: 'Ouvrir le portail du palais, au nord du Rivage Pâle, avec les trois souvenirs.' },
+    { si: ['selene_vue'], texte: 'Retrouver les souvenirs de Lune : Rivage Pâle, Aubefonde (est), Jardins de Lune (ouest).' },
+    { si: ['acte5'], texte: 'Parler à Séléné, la Grande Veilleuse de Bordebrume.' },
+    { si: ['acte4_fini'], texte: "Parler à Aurèle, au sommet des Cimes : le Royaume Pâle vous attend." },
     { si: ['aurele_libre'], texte: 'Rallumer le Fanal des Cimes avec les trois braises.' },
     { si: ['reflet_vaincu'], texte: 'Libérer la gardienne prisonnière du cœur de glace.' },
     { si: ['braises_reunies'], texte: 'Traverser le Col du Blizzard, au nord des Pentes Blanches, jusqu’au Fanal des Cimes.' },

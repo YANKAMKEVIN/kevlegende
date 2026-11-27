@@ -135,7 +135,7 @@ export const ACTE1_AVENTURE: Record<string, Script> = {
     { c: 'retire', objet: 'eclat_fanal' },
     { c: 'secousse' },
     { c: 'dit', texte: "La flamme jaillit, blanche, immense. La Brume recule en hurlant jusqu'au bord de l'île, puis tombe dans les nuages." },
-    { c: 'dit', qui: '???', portrait: 'roi', texte: '« Un Fanal rallumé… Comme c’est touchant. Il en reste cinq, petit voilier. Et ceux-là, je les tiens déjà. »' },
+    { c: 'dit', qui: '???', portrait: 'roi', texte: '« Un Fanal rallumé… Comme c’est touchant. Il en reste quatre, petit voilier. Et ceux-là, je les tiens déjà. »' },
     { c: 'dit', qui: M, portrait: 'mira', texte: 'Tu as entendu ça ? Cette voix venait… d’en dessous.' },
     { c: 'dit', qui: A, portrait: 'ael', texte: 'Grand-mère arrive. Allons lui parler.' },
     { c: 'quete', id: 'q_fanal', etat: 'terminee' },
@@ -143,7 +143,7 @@ export const ACTE1_AVENTURE: Record<string, Script> = {
   ],
   odile_colline: [
     { c: 'dit', qui: 'Odile', portrait: 'odile', texte: 'Tu l’as fait… Mon petit voilier a rallumé le Fanal de Clairval.' },
-    { c: 'dit', qui: A, portrait: 'ael', texte: 'Grand-mère, une voix a parlé du « Roi Pâle ». Elle a dit que les cinq autres Fanaux étaient perdus.' },
+    { c: 'dit', qui: A, portrait: 'ael', texte: 'Grand-mère, une voix a parlé du « Roi Pâle ». Elle a dit que les quatre autres Fanaux étaient perdus.' },
     { c: 'dit', qui: 'Odile', portrait: 'odile', texte: "Le Roi Pâle… Morvane. C'était un gardien de Fanal, autrefois. Il voulait descendre sous la Brume, rejoindre le Fond." },
     { c: 'dit', qui: 'Odile', portrait: 'odile', texte: "On le croyait perdu. S'il éteint les Fanaux, toutes les îles tomberont avec lui." },
     { c: 'dit', qui: 'Odile', portrait: 'odile', texte: "Le courant de vent qui relie Clairval à Port-Venteux s'est rouvert. Prends le Moineau, le voilier de tes parents. Il t'attend." },

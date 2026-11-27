@@ -25,7 +25,13 @@ import { givrebourg } from './acte4/givrebourg';
 import { grotte_givre } from './acte4/grotte_givre';
 import { lac_givre } from './acte4/lac_givre';
 import { pentes } from './acte4/pentes';
+import { aubefonde } from './acte5/aubefonde';
+import { bordebrume } from './acte5/bordebrume';
+import { fanal_premier } from './acte5/fanal_premier';
+import { jardins_lune } from './acte5/jardins_lune';
+import { palais_pale } from './acte5/palais_pale';
+import { rivage_pale } from './acte5/rivage_pale';
 
-const L: MapDef[] = [maison_ael, clairval, mairie, bois, col, grotte1, grotte2, colline, port, forge, recifs, epave, phare, ambrelune, dunes, ruines, tombeau, canyon, fanal_sables, givrebourg, pentes, lac_givre, grotte_givre, col_blizzard, fanal_cimes];
+const L: MapDef[] = [maison_ael, clairval, mairie, bois, col, grotte1, grotte2, colline, port, forge, recifs, epave, phare, ambrelune, dunes, ruines, tombeau, canyon, fanal_sables, givrebourg, pentes, lac_givre, grotte_givre, col_blizzard, fanal_cimes, bordebrume, rivage_pale, aubefonde, jardins_lune, palais_pale, fanal_premier];
 
 export const CARTES: Readonly<Record<string, MapDef>> = Object.fromEntries(L.map((m) => [m.id, m]));

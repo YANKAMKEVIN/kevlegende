@@ -117,7 +117,7 @@ export class Bot {
     const fait = () => 'jusqua' in e && !!this.j.p.flags[e.jusqua];
     if (fait()) return;
     if ('niveau' in e && e.niveau) this.entrainer(e.niveau, e.carte);
-    if ('niveau' in e && e.niveau) this.seReposer();
+    if ('niveau' in e && e.niveau) this.seReposer(0.97);
     const j = this.j;
     for (let essai = 0; essai < 30; essai++) {
       if (fait()) return;
@@ -168,7 +168,9 @@ export class Bot {
       if (!this.aller(zone, () => this.casesRencontre(zone), false)) throw new Error(`Zone d’entraînement inaccessible : ${zone} depuis ${this.j.p.carte} (${this.j.p.x},${this.j.p.y})`);
       if (this.j.mode !== 'exploration' || this.j.p.carte !== zone) continue;
       const ici = { x: this.j.p.x, y: this.j.p.y };
-      const autre = voisins(ici).find((v) => tuile(this.j.carte(), v.x, v.y).rencontres && chemin(this.j, [v])?.length === 1);
+      const cc = this.j.carte();
+      const portes = (cc.def.portes ?? []).map((po) => ancre(cc, po.ancre));
+      const autre = voisins(ici).find((v) => tuile(cc, v.x, v.y).rencontres && !portes.some((q) => q.x === v.x && q.y === v.y) && chemin(this.j, [v])?.length === 1);
       if (!autre) throw new Error('Zone d’entraînement trop étroite');
       for (let k = 0; k < 80 && this.j.mode === 'exploration'; k++) {
         const ch = chemin(this.j, [k % 2 === 0 ? autre : ici]);
