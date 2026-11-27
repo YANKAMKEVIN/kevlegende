@@ -1,0 +1,43 @@
+// Grotte des Échos, le Cœur : l'autel et son gardien.
+import type { MapDef } from '../../../core/world/mapdef';
+import { APP } from '../apparences';
+
+export const grotte2: MapDef = {
+  id: 'grotte2',
+  nom: 'Cœur des Échos',
+  acte: 1,
+  ambiance: 'grotte',
+  musique: 'sanctuaire',
+  solDefaut: 'c',
+  sol: { D: 'c' },
+  plan: [
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+    'CCCCCCCCCCcCCcccccCCCCCCCCCC',
+    'CCCCCCCCc*cccAccccc*cCCCCCCC',
+    'CCCCCCCccccccccccccccccCCCCC',
+    'CCCCCCc*ccccccccccccc*cCCCCC',
+    'CCCCCCccccccccBcccccccccCCCC',
+    'CCCCCC*ccccccccccccccc*cCCCC',
+    'CCCCCCCccccccccccccccccCCCCC',
+    'CCCCCCCCccc~cDcc~ccccCCCCCCC',
+    'CCCCCCCC~~~~~===~~~~~~CCCCCC',
+    'CCCCC~~~~~~~~===~~~~~~~~CCCC',
+    'CCCCC~~~~~~~~===~~~~~~~~~CCC',
+    'CCCCC~~~~~~~~===~~~~~~~~CCCC',
+    'CCCCCCC~~~~~~===~~~~~~CCCCCC',
+    'CCCCCCCCCCCccccccCCCCCCCCCCC',
+    'CCCCCCCCCCCccccccccCCCCCCCCC',
+    'CCCCCCCCCCCccccccCCCCCCCCCCC',
+    'CCCCCCCCCCCCCcccCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCcccCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCcccCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCcFcCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCcccCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCcEcCCCCCCCCCCCC',
+    'CCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+  ],
+  props: [{ type: 'autel', ancre: 'A', w: 3, h: 2, evenement: 'autel_echos', etat: ['eclat_obtenu'] }],
+  pnj: [{ ancre: 'B', id: 'serpent', nom: 'Serpent', apparence: APP.serpent, evenement: 'serpent_vu', si: ['!serpent_vaincu'] }],
+  portes: [{ ancre: 'E', vers: 'grotte1', arrivee: 'U', dir: 'bas' }],
+  declencheurs: [{ ancre: 'D', w: 3, h: 1, evenement: 'serpent_combat', si: ['!serpent_vaincu'] }],
+};

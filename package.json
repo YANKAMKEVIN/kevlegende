@@ -1,0 +1,29 @@
+{
+  "name": "kevlegende",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kevlegende : un RPG d'aventure original dans un archipel d'îles flottantes.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:bot": "vitest run --config vitest.bot.config.ts",
+    "test:e2e": "playwright test",
+    "check:size": "node scripts/check-file-size.mjs",
+    "check:data": "vite-node scripts/check-data.ts",
+    "ci": "npm run typecheck && npm run check:size && npm run test:cov && npm run test:bot && npm run build && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1",
+    "@types/node": "^22.10.0",
+    "@vitest/coverage-v8": "2.1.8",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vite-node": "2.1.8",
+    "vitest": "2.1.8"
+  }
+}

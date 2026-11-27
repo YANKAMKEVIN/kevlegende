@@ -1,0 +1,67 @@
+// L'Épave du Fendeur, repaire des pirates de brume.
+import type { MapDef } from '../../../core/world/mapdef';
+import { APP } from '../apparences';
+
+export const epave: MapDef = {
+  id: 'epave',
+  nom: 'Épave du Fendeur',
+  acte: 2,
+  ambiance: 'brume',
+  musique: 'epave',
+  solDefaut: 'h',
+  sol: { E: 'h' },
+  plan: [
+    'oooooooooooooooooooooooooooooooooooo',
+    'oooooooooooooooooooooooooooooooooooo',
+    'oooooooooooooooooooooooooooooooooooo',
+    'ooooooooooooooWWoooooooooooooooooooo',
+    'oooooooooooWWWWWWWWWWWWWWWWWWWoooooo',
+    'oooooooooWWWh1hhhhWWWWh4hhhhhWoooooo',
+    'oooooooWWWWWhhhhhhWWWWhhhh6hhWWooooo',
+    'ooooooWWWWWWhhhhhhWWWWhhhhhhhhWooooo',
+    'oooooWWWWWWWWWWhWWWWWWWWWhWWWWWWoooo',
+    'ooooWWWWWWWWWWWhWWWWWWWWWhWWWWWWoooo',
+    'ooooWhhhhhWWhhhhhhhhhhhhhhhhWWhWWWoo',
+    'oooWWhhhhhWWhhhhhhhhhhhhhhhhWWDhh3oo',
+    'oooWhhhhhhhhhhhhhhhhhhhhhhhhhhhhBWoo',
+    'ooWWhhFhhhWWWWWhWWWWWWWWWhWWWWhhhWoo',
+    'ooWWhhhhhhWWWWWhWWWWWWWWWhWWWWhhhWoo',
+    'ooWWWWEWWWWWhhhhhhhWWWhhhhhhhhWWWWoo',
+    'ooWWWWWWWWWWhhhhhhhWWWhhhhhhhhWWWWoo',
+    'oooWWWWWWWWWhh5hhKhWWWhhhhhhhhWWWWoo',
+    'ooooWWWWWWWWhhhhhhhWWWhhhhh2hhWWWooo',
+    'ooooooWWWWWWhhhhhhhWWWhhhhhhhWWWoooo',
+    'ooooooooWWWWWWWWWWWWWWWWWWWWWWoooooo',
+    'ooooooooooWWWWWWWWWWWWWWWWWWWooooooo',
+    'ooooooooooooWWWWWWWWWWWWWooooooooooo',
+    'ooooooooooooooooWWWWoooooooooooooooo',
+    'oooooooooooooooooooooooooooooooooooo',
+    'oooooooooooooooooooooooooooooooooooo',
+  ],
+  props: [
+    { type: 'tonneau', ancre: '5' },
+    { type: 'caisse', ancre: '6' },
+  ],
+  pnj: [
+    { ancre: 'B', id: 'creux', nom: 'Capitaine Creux', apparence: APP.ombre, evenement: 'creux_vu', si: ['!creux_vaincu'], dir: 'gauche' },
+    { ancre: 'K', id: 'jonas', nom: 'Jonas', apparence: APP.pip, evenement: 'jonas', dir: 'bas' },
+  ],
+  coffres: [
+    { ancre: '1', id: 'p1', objet: 'piece_ancienne' },
+    { ancre: '2', id: 'p2', objet: 'piece_ancienne' },
+    { ancre: '3', id: 'p3', objet: 'piece_ancienne' },
+    { ancre: '4', id: 'c1', objet: 'cotte_legere' },
+  ],
+  portes: [{ ancre: 'E', vers: 'recifs', arrivee: 'H', dir: 'bas' }],
+  declencheurs: [{ ancre: 'D', h: 3, evenement: 'creux_combat', si: ['!creux_vaincu'] }],
+  rencontres: {
+    taux: 0.12,
+    niveauConseille: 13,
+    groupes: [
+      { ennemis: ['pirate_brume'], poids: 3 },
+      { ennemis: ['pirate_brume', 'mouette_pirate'], poids: 3 },
+      { ennemis: ['anguille_nuage', 'meduse_ciel'], poids: 2 },
+      { ennemis: ['pirate_brume', 'pirate_brume'], poids: 1 },
+    ],
+  },
+};
