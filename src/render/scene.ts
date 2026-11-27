@@ -25,7 +25,7 @@ interface Objet {
   dessin: () => void;
 }
 
-const ESSENCES: Record<string, Essence> = { col: 'sapin', colline: 'automne', epave: 'brume', phare: 'automne' };
+const ESSENCES: Record<string, Essence> = { col: 'sapin', colline: 'automne', epave: 'brume', phare: 'automne', ambrelune: 'palmier', dunes: 'palmier', ruines: 'palmier', canyon: 'palmier', fanal_sables: 'palmier' };
 
 export class Scene {
   readonly ctx: CanvasRenderingContext2D;
@@ -300,6 +300,19 @@ export class Scene {
       g.addColorStop(1, rgba('#3d3f7a', 0));
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, this.w, this.h);
+    } else if (amb === 'desert') {
+      // Chaleur dorée et sable porté par le vent.
+      const g = ctx.createLinearGradient(0, 0, 0, this.h);
+      g.addColorStop(0, rgba('#ffd27a', 0.12));
+      g.addColorStop(1, rgba('#f08a3a', 0.08));
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, this.w, this.h);
+      ctx.fillStyle = rgba('#f7e2b0', 0.55);
+      for (let i = 0; i < 40; i++) {
+        const sx = ((i * 97 + t * (60 + (i % 5) * 18)) % (this.w + 40)) - 20;
+        const sy = ((i * 211) % this.h) + Math.sin(t * 1.3 + i) * 12;
+        ctx.fillRect(sx, sy, 2 + (i % 3), 1.2);
+      }
     } else if (amb === 'brume' || amb === 'nuit') {
       ctx.fillStyle = rgba(amb === 'nuit' ? '#1c2547' : PAL.brume, 0.28);
       ctx.fillRect(0, 0, this.w, this.h);

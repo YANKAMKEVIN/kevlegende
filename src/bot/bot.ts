@@ -80,7 +80,7 @@ export class Bot {
         const route = routeCartes(this.j, carte);
         if (!route || route.length === 0) return false;
         const porte = ancre(this.j.carte(), route[0]!.porte);
-        this.marcher(chemin(this.j, [porte], false));
+        this.marcher(chemin(this.j, [porte]));
         continue;
       }
       const buts = adjacent ? cibles().flatMap(voisins) : cibles();
@@ -165,7 +165,7 @@ export class Bot {
       const zone = this.zoneEntrainement(carteCible);
       if (!zone) throw new Error(`Pas de zone d'entraînement pour ${carteCible}`);
       this.seReposer(0.5);
-      if (!this.aller(zone, () => this.casesRencontre(zone), false)) throw new Error('Zone d’entraînement inaccessible');
+      if (!this.aller(zone, () => this.casesRencontre(zone), false)) throw new Error(`Zone d’entraînement inaccessible : ${zone} depuis ${this.j.p.carte} (${this.j.p.x},${this.j.p.y})`);
       if (this.j.mode !== 'exploration' || this.j.p.carte !== zone) continue;
       const ici = { x: this.j.p.x, y: this.j.p.y };
       const autre = voisins(ici).find((v) => tuile(this.j.carte(), v.x, v.y).rencontres && chemin(this.j, [v])?.length === 1);

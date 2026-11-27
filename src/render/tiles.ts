@@ -1,18 +1,20 @@
 // Peinture procédurale des tuiles : couleurs de base, transitions douces, détails par case.
 import { PAL } from './palette';
 import { alea, disque, ellipse, hash, mix, rgba, rondRect, shade } from './util';
+import { decorDesert, peindreDesert } from './tiles_desert';
 
 export type Voisin = (dx: number, dy: number) => string;
 
 /** Familles de sol : sert aux transitions (l'herbe déborde sur les chemins). */
 const VERT = new Set(['.', ',', 'f', 'T', 'b']);
-const TERRE = new Set([':', '_', 's', 'k', '^']);
+const TERRE = new Set([':', '_', 's', 'k', '^', 'y', 'e']);
 export const estVert = (ch: string) => VERT.has(ch);
 
 /** Sol peint sous les tuiles décor (arbres, rochers…) selon l'ambiance de la carte. */
 export function solSous(ch: string, fond: string): string {
-  if (ch === 'T' || ch === 'b') return '.';
-  if (ch === '#') return fond === 'c' ? 'c' : '.';
+  if (ch === 'T' || ch === 'b') return fond === 's' ? 's' : '.';
+  if (ch === '#') return fond === 'c' ? 'c' : fond;
+  if (ch === 'g' || ch === 'q') return fond === 'c' ? 'l' : 's';
   if (ch === '*') return 'c';
   if (ch === 'r') return 'k';
   return ch;
@@ -70,7 +72,13 @@ export function peindreTuile(ctx: CanvasRenderingContext2D, ch: string, tx: numb
   const x = tx * L;
   const y = ty * L;
   const r = alea(hash(tx, ty, 7) * 4294967296);
-  const sol = solSous(ch, fond);
+  let sol = solSous(ch, fond);
+  // Palmier de l'oasis : herbe si l'herbe l'entoure.
+  const autour = [v(0, 1), v(0, -1), v(1, 0), v(-1, 0)];
+  if (ch === 'T' && sol === 's' && autour.some(estVert)) sol = '.';
+  // Cactus, grès et palmiers posés dans les dunes : même sable ondulé autour.
+  else if ((ch === 'q' || ch === 'g' || ch === 'T') && sol === 's' && autour.filter((n) => n === 'y').length >= 2) sol = 'y';
+  if (peindreDesert(ctx, sol, tx, ty, L, v, r)) return;
   switch (sol) {
     case '.':
     case ',':
@@ -281,10 +289,11 @@ export function peindreTransitions(ctx: CanvasRenderingContext2D, ch: string, tx
 }
 
 /** Décor bas posé sur le sol : rochers, buissons, cristaux, coraux. */
-export function peindreDecorBas(ctx: CanvasRenderingContext2D, ch: string, tx: number, ty: number, L: number): void {
+export function peindreDecorBas(ctx: CanvasRenderingContext2D, ch: string, tx: number, ty: number, L: number, v: Voisin = () => 'o'): void {
   const x = tx * L;
   const y = ty * L;
   const r = alea(hash(tx, ty, 11) * 4294967296);
+  if (ch === 'g' || ch === 'q') return decorDesert(ctx, ch, tx, ty, L, v, r);
   if (ch === '#') {
     ellipse(ctx, x + L / 2, y + L * 0.82, L * 0.44, L * 0.14, rgba('#000000', 0.2));
     ctx.fillStyle = PAL.roche;

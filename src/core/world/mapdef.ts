@@ -1,7 +1,7 @@
 // Format des cartes écrites à la main : un plan ASCII + des objets posés sur des ancres.
 import type { Dir } from '../types';
 
-export type Ambiance = 'jour' | 'aube' | 'crepuscule' | 'nuit' | 'grotte' | 'interieur' | 'brume';
+export type Ambiance = 'jour' | 'aube' | 'crepuscule' | 'nuit' | 'grotte' | 'interieur' | 'brume' | 'desert';
 
 /** Condition : liste de drapeaux, « !x » = drapeau absent. Toutes doivent être vraies. */
 export type Cond = readonly string[];
@@ -50,7 +50,8 @@ export type PropType =
   | 'maison' | 'maison_bleue' | 'fanal' | 'puits' | 'panneau' | 'barriere' | 'rocher' | 'caisse'
   | 'lit' | 'table' | 'etagere' | 'cheminee' | 'comptoir' | 'tonneau' | 'barque' | 'statue'
   | 'autel' | 'levier' | 'grille' | 'lanterne' | 'grand_arbre' | 'etal' | 'enclume' | 'navire'
-  | 'porte_grotte' | 'cristaux' | 'herbe_lune' | 'mat' | 'filet' | 'moulin' | 'tente' | 'souche';
+  | 'porte_grotte' | 'cristaux' | 'herbe_lune' | 'mat' | 'filet' | 'moulin' | 'tente' | 'souche'
+  | 'maison_ocre' | 'obelisque' | 'jarre' | 'miroir' | 'colonne' | 'ossements' | 'tourbillon' | 'sarcophage';
 
 export interface PropDef {
   type: PropType;

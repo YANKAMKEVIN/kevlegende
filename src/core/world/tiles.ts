@@ -3,7 +3,8 @@
 export type TileId =
   | 'herbe' | 'herbe_haute' | 'chemin' | 'pave' | 'roche' | 'arbre' | 'eau' | 'pont' | 'ciel'
   | 'plancher' | 'mur' | 'sol_grotte' | 'paroi' | 'gouffre' | 'fleurs' | 'sable' | 'quai'
-  | 'buisson' | 'cristal' | 'tapis' | 'marches' | 'corail' | 'sol_corail' | 'pont_bois' | 'coque';
+  | 'buisson' | 'cristal' | 'tapis' | 'marches' | 'corail' | 'sol_corail' | 'pont_bois' | 'coque'
+  | 'dune' | 'gres' | 'dalle' | 'parvis' | 'mur_temple' | 'cactus';
 
 export interface TileInfo {
   id: TileId;
@@ -40,6 +41,12 @@ export const TILES: Readonly<Record<string, TileInfo>> = {
   k: T('sol_corail', true, true),
   p: T('pont_bois', true),
   h: T('coque', true, true),
+  y: T('dune', true, true),
+  g: T('gres', false),
+  l: T('dalle', true, true),
+  e: T('parvis', true),
+  m: T('mur_temple', false),
+  q: T('cactus', false),
 };
 
 export const isTileChar = (ch: string): boolean => ch in TILES;

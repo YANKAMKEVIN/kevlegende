@@ -125,9 +125,14 @@ export class VueCombat {
       const y = sol + (i % 2) * h * (portrait ? 0.09 : 0.06) - (n === 1 ? 0 : h * 0.03);
       this.pos.set(c.uid, { x, y, s });
     });
+    // Colonne des héros : plus serrée à quatre pour rester dans l'écran.
+    const nh = heros.length;
+    const pasX = nh > 3 ? 0.085 : 0.1;
     heros.forEach((c, i) => {
-      const s = base * (portrait ? 0.78 : 0.85);
-      this.pos.set(c.uid, { x: w * (portrait ? 0.7 + i * 0.1 : 0.66 + i * 0.1), y: sol - h * 0.06 + i * h * (portrait ? 0.05 : 0.08), s });
+      const s = base * (portrait ? 0.78 : 0.85) * (nh > 3 ? 0.88 : 1);
+      const x0 = portrait ? (nh > 3 ? 0.64 : 0.7) : nh > 3 ? 0.62 : 0.66;
+      const pasY = (portrait ? 0.05 : 0.08) * (nh > 3 ? 0.8 : 1);
+      this.pos.set(c.uid, { x: w * (x0 + i * pasX), y: sol - h * 0.06 + i * h * pasY, s });
     });
     const ordre = [...b.combattants].sort((a, c) => this.pos.get(a.uid)!.y - this.pos.get(c.uid)!.y);
     for (const c of ordre) this.combattant(ctx, c);
@@ -179,15 +184,16 @@ export class VueCombat {
       const ih = img.height * r;
       ctx.drawImage(img, (w - iw) / 2, (h - ih) * 0.7, iw, ih);
     } else {
-      const grotte = carte.startsWith('grotte');
+      const grotte = carte.startsWith('grotte') || carte === 'tombeau';
       const brume = carte === 'epave';
+      const sable = ['ambrelune', 'dunes', 'ruines', 'canyon', 'fanal_sables'].includes(carte);
       const g = ctx.createLinearGradient(0, 0, 0, h);
-      g.addColorStop(0, grotte ? '#141629' : brume ? '#3e3560' : '#79c0e2');
-      g.addColorStop(0.6, grotte ? '#2a2e4a' : brume ? '#8f80ad' : '#cfe9f5');
-      g.addColorStop(1, grotte ? '#3a3f5e' : brume ? '#5b4b7a' : '#f6e7c8');
+      g.addColorStop(0, grotte ? '#141629' : brume ? '#3e3560' : sable ? '#5fa8d6' : '#79c0e2');
+      g.addColorStop(0.6, grotte ? '#2a2e4a' : brume ? '#8f80ad' : sable ? '#f2d49a' : '#cfe9f5');
+      g.addColorStop(1, grotte ? '#3a3f5e' : brume ? '#5b4b7a' : sable ? '#f5b968' : '#f6e7c8');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
-      ctx.fillStyle = grotte ? PAL.grotteSol : brume ? '#6f5640' : PAL.herbe;
+      ctx.fillStyle = grotte ? PAL.grotteSol : brume ? '#6f5640' : sable ? '#e9c27e' : PAL.herbe;
       ctx.beginPath();
       const sol = h * (h > w * 1.1 ? 0.5 : 0.62);
       ctx.ellipse(w / 2, sol + h * 0.18, w * 0.8, h * 0.24, 0, 0, Math.PI * 2);

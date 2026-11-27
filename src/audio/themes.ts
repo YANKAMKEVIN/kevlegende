@@ -22,6 +22,8 @@ const MAJ = [0, 2, 4, 5, 7, 9, 11];
 const MIN = [0, 2, 3, 5, 7, 8, 10];
 const DOR = [0, 2, 3, 5, 7, 9, 10];
 const LYD = [0, 2, 4, 6, 7, 9, 11];
+/** Mode oriental (phrygien dominant) pour les Sables d'Ambre. */
+const HIJ = [0, 1, 4, 5, 7, 8, 10];
 
 export const THEMES: Readonly<Record<string, Theme>> = {
   titre: { tempo: 76, racine: 62, gamme: LYD, accords: [0, 4, 5, 3], densite: 0.45, timbre: 'triangle', pad: true, basse: true, percu: false, graine: 11 },
@@ -35,6 +37,12 @@ export const THEMES: Readonly<Record<string, Theme>> = {
   port: { tempo: 116, racine: 67, gamme: MAJ, accords: [0, 0, 3, 4, 0, 5, 3, 4], densite: 0.65, timbre: 'square', pad: false, basse: true, percu: true, graine: 43 },
   recifs: { tempo: 100, racine: 66, gamme: LYD, accords: [0, 1, 5, 4], densite: 0.5, timbre: 'triangle', pad: true, basse: true, percu: true, graine: 47 },
   epave: { tempo: 78, racine: 58, gamme: DOR, accords: [0, 3, 6, 4], densite: 0.35, timbre: 'sine', pad: true, basse: true, percu: false, graine: 53 },
+  oasis: { tempo: 92, racine: 62, gamme: HIJ, accords: [0, 0, 1, 0, 3, 1, 0, 0], densite: 0.55, timbre: 'triangle', pad: true, basse: true, percu: true, graine: 71 },
+  dunes: { tempo: 108, racine: 64, gamme: HIJ, accords: [0, 1, 0, 6, 0, 1, 3, 0], densite: 0.6, timbre: 'square', pad: true, basse: true, percu: true, graine: 73 },
+  ruines: { tempo: 84, racine: 60, gamme: HIJ, accords: [0, 5, 1, 0], densite: 0.4, timbre: 'sine', pad: true, basse: true, percu: false, graine: 79 },
+  tombeau: { tempo: 66, racine: 55, gamme: HIJ, accords: [0, 1, 0, 4], densite: 0.3, timbre: 'sine', pad: true, basse: true, percu: false, graine: 83 },
+  canyon: { tempo: 98, racine: 59, gamme: DOR, accords: [0, 6, 3, 4, 0, 6, 5, 4], densite: 0.5, timbre: 'triangle', pad: true, basse: true, percu: true, graine: 89 },
+  tour: { tempo: 76, racine: 62, gamme: LYD, accords: [0, 4, 1, 4], densite: 0.4, timbre: 'triangle', pad: true, basse: true, percu: false, graine: 97 },
   combat: { tempo: 148, racine: 62, gamme: MIN, accords: [0, 5, 6, 4, 0, 5, 3, 4], densite: 0.75, timbre: 'square', pad: false, basse: true, percu: true, graine: 59 },
   boss: { tempo: 160, racine: 57, gamme: MIN, accords: [0, 0, 5, 6, 3, 3, 4, 4], densite: 0.8, timbre: 'sawtooth', pad: true, basse: true, percu: true, graine: 61 },
   fin: { tempo: 72, racine: 64, gamme: MAJ, accords: [0, 4, 5, 3, 0, 4, 3, 4], densite: 0.5, timbre: 'triangle', pad: true, basse: true, percu: false, graine: 67 },
