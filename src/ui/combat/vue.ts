@@ -346,5 +346,7 @@ function teintesFond(carte: string): readonly [string, string, string, string] {
   if (carte === 'epave') return ['#3e3560', '#8f80ad', '#5b4b7a', '#6f5640'];
   if (['ambrelune', 'dunes', 'ruines', 'canyon', 'fanal_sables'].includes(carte)) return ['#5fa8d6', '#f2d49a', '#f5b968', '#e9c27e'];
   if (['givrebourg', 'pentes', 'lac_givre', 'col_blizzard', 'fanal_cimes'].includes(carte)) return ['#86b4dc', '#cfe2f3', '#f1f5fb', '#e6eef7'];
+  if (['rivage_pale', 'aubefonde', 'jardins_lune', 'palais_pale', 'fanal_premier'].includes(carte)) return ['#2e2748', '#5b4f7e', '#a99cc4', '#9d99ad'];
+  if (carte === 'bordebrume') return ['#3d3f7a', '#c9708a', '#f5b66b', '#6f8a5a'];
   return ['#79c0e2', '#cfe9f5', '#f6e7c8', PAL.herbe];
 }

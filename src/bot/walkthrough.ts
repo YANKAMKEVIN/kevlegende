@@ -21,8 +21,11 @@ export const REPOS: readonly PointRepos[] = [
   { carte: 'recifs', ancre: 'M', si: ['acte2', '!acte3'] },
   { carte: 'ambrelune', ancre: 'H', si: ['acte3', '!acte4'] },
   { carte: 'canyon', ancre: 'K', si: ['acte3', '!acte4'] },
-  { carte: 'givrebourg', ancre: 'H', si: ['acte4'] },
-  { carte: 'col_blizzard', ancre: 'K', si: ['acte4', 'braises_reunies'] },
+  { carte: 'givrebourg', ancre: 'H', si: ['acte4', '!acte5'] },
+  { carte: 'col_blizzard', ancre: 'K', si: ['acte4', 'braises_reunies', '!acte5'] },
+  { carte: 'palais_pale', ancre: 'L', si: ['acte5', 'portail_ouvert'] },
+  { carte: 'aubefonde', ancre: 'K', si: ['acte5'] },
+  { carte: 'bordebrume', ancre: 'H', si: ['acte5'] },
 ];
 
 export const ACTE1: readonly Etape[] = [
@@ -156,4 +159,43 @@ export const ACTE4: readonly Etape[] = [
   { type: 'interagir', carte: 'fanal_cimes', ancre: '1', jusqua: 'acte4_fini' },
 ];
 
-export const AVENTURE: readonly Etape[] = [...ACTE1, ...ACTE2, ...ACTE3, ...ACTE4];
+export const ACTE5: readonly Etape[] = [
+  { type: 'parler', carte: 'bordebrume', ancre: 'J', jusqua: 'selene_vue' },
+  { type: 'coffres', carte: 'bordebrume' },
+  { type: 'parler', carte: 'bordebrume', ancre: 'K', jusqua: 'quete_leviathan' },
+  { type: 'parler', carte: 'bordebrume', ancre: 'I', jusqua: 'quete_pages' },
+  { type: 'parler', carte: 'bordebrume', ancre: 'H', jusqua: 'chanson_lio' },
+  { type: 'boutique', carte: 'bordebrume', ancre: 'F' },
+  { type: 'boutique', carte: 'bordebrume', ancre: 'G' },
+  { type: 'aller', carte: 'rivage_pale', ancre: 'R', jusqua: 'rivage_vu' },
+  { type: 'coffres', carte: 'rivage_pale' },
+  { type: 'aller', carte: 'rivage_pale', ancre: 'D', jusqua: 'passeur_vaincu', niveau: 45 },
+  { type: 'interagir', carte: 'rivage_pale', ancre: 'Z', jusqua: 'souvenir1' },
+  { type: 'parler', carte: 'aubefonde', ancre: 'K', jusqua: 'quete_dormeurs' },
+  { type: 'interagir', carte: 'aubefonde', ancre: '1', jusqua: 'eveil1' },
+  { type: 'interagir', carte: 'aubefonde', ancre: '2', jusqua: 'eveil2' },
+  { type: 'interagir', carte: 'aubefonde', ancre: '3', jusqua: 'eveil3' },
+  { type: 'parler', carte: 'aubefonde', ancre: 'K', jusqua: 'dormeurs_rendus' },
+  { type: 'aller', carte: 'aubefonde', ancre: 'D', jusqua: 'cloche_vaincue', niveau: 47 },
+  { type: 'interagir', carte: 'aubefonde', ancre: 'Z', jusqua: 'souvenir2' },
+  { type: 'coffres', carte: 'aubefonde' },
+  { type: 'boutique', carte: 'bordebrume', ancre: 'G' },
+  { type: 'coffres', carte: 'jardins_lune' },
+  { type: 'aller', carte: 'jardins_lune', ancre: 'D', jusqua: 'ronce_vaincue', niveau: 49 },
+  { type: 'interagir', carte: 'jardins_lune', ancre: 'A', jusqua: 'souvenir3' },
+  { type: 'boutique', carte: 'bordebrume', ancre: 'F' },
+  { type: 'interagir', carte: 'rivage_pale', ancre: 'G', jusqua: 'portail_ouvert' },
+  { type: 'aller', carte: 'palais_pale', ancre: 'R', jusqua: 'palais_vu' },
+  { type: 'coffres', carte: 'palais_pale' },
+  { type: 'aller', carte: 'palais_pale', ancre: 'D', jusqua: 'senechal_vaincu', niveau: 51 },
+  { type: 'parler', carte: 'bordebrume', ancre: 'I', jusqua: 'pages_rendues' },
+  { type: 'boutique', carte: 'bordebrume', ancre: 'G' },
+  { type: 'boutique', carte: 'bordebrume', ancre: 'F' },
+  { type: 'coffres', carte: 'fanal_premier' },
+  { type: 'aller', carte: 'fanal_premier', ancre: 'D', jusqua: 'roi_apaise', niveau: 55 },
+  { type: 'interagir', carte: 'rivage_pale', ancre: 'L', jusqua: 'leviathan_vaincu', niveau: 58 },
+  { type: 'parler', carte: 'bordebrume', ancre: 'K', jusqua: 'leviathan_rendu' },
+  { type: 'interagir', carte: 'fanal_premier', ancre: '1', jusqua: 'acte5_fini' },
+];
+
+export const AVENTURE: readonly Etape[] = [...ACTE1, ...ACTE2, ...ACTE3, ...ACTE4, ...ACTE5];

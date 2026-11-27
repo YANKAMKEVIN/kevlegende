@@ -7,12 +7,14 @@ const VERS = {
   clairval: { texte: 'Voguer vers Clairval', faire: [VOILE, { c: 'teleporte', carte: 'clairval', ancre: 'X', dir: 'haut' }, { c: 'dit', texte: 'Le courant de vent vous ramène à Clairval.' }] },
   ambrelune: { texte: 'Voguer vers Ambrelune', faire: [VOILE, { c: 'teleporte', carte: 'ambrelune', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Le Moineau file vers les dunes dorées.' }] },
   givrebourg: { texte: 'Voguer vers Givrebourg', faire: [VOILE, { c: 'teleporte', carte: 'givrebourg', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Le froid mord les doigts : voici les Cimes de Givre.' }] },
+  bordebrume: { texte: 'Voguer vers Bordebrume', faire: [VOILE, { c: 'teleporte', carte: 'bordebrume', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Les lanternes des Veilleurs brillent au bord du gouffre.' }] },
 } satisfies Record<string, { texte: string; faire: Cmd[] }>;
 
 type Ile = keyof typeof VERS;
 
 /** Îles ouvertes à partir de chaque acte (l'ordre est celui des menus). */
 const PAR_ACTE: readonly [string | null, readonly Ile[]][] = [
+  ['acte5', ['clairval', 'port', 'ambrelune', 'givrebourg', 'bordebrume']],
   ['acte4', ['clairval', 'port', 'ambrelune', 'givrebourg']],
   ['acte3', ['clairval', 'port', 'ambrelune']],
   [null, ['clairval', 'port']],

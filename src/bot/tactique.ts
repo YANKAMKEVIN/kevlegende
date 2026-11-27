@@ -8,6 +8,13 @@ import type { SkillDef } from '../core/types';
 
 const ratio = (c: Combattant) => c.pv / c.stats.pvMax;
 
+/** Soins de groupe, du plus puissant au plus faible. */
+const SOINS_GROUPE = ['chant_lune', 'aurore', 'benediction', 'brise_douce'];
+/** Potions de groupe, puis individuelles (de la plus faible à la plus forte), puis remèdes de PS. */
+const ELIXIRS = ['larme_fanal', 'elixir_aurore', 'elixir_soleil', 'elixir_vents'];
+const POTIONS = ['herbe_douce', 'tonique', 'datte_miel', 'soupe_chaude', 'lait_lune'];
+const ETHERS = ['rosee_etoile', 'the_epices', 'eau_oasis', 'gouttes_ciel'];
+
 export function choisirAction(b: BattleState, acteur: Combattant, inv: Record<string, number>): Action {
   const allies = b.combattants.filter((c) => c.camp === 'heros');
   const vivants = allies.filter((c) => c.pv > 0);
@@ -20,17 +27,28 @@ export function choisirAction(b: BattleState, acteur: Combattant, inv: Record<st
     if (peut('eveil')) return { type: 'competence', id: 'eveil', cible: ko[0]!.uid };
     if ((inv['plume_aube'] ?? 0) > 0) return { type: 'objet', id: 'plume_aube', cible: ko[0]!.uid };
   }
-  // 2. Soigner.
+  // 2. Soigner : le meilleur soin de groupe connu, sinon un soin simple, sinon la potion la mieux adaptée.
   const blesses = vivants.filter((c) => ratio(c) < 0.45).sort((x, y) => ratio(x) - ratio(y));
-  if (blesses.length >= 2 && peut('brise_douce')) return { type: 'competence', id: 'brise_douce', cible: acteur.uid };
+  const soinGroupe = SOINS_GROUPE.find(peut);
+  if (blesses.length >= 2 && soinGroupe) return { type: 'competence', id: soinGroupe, cible: acteur.uid };
   if (blesses.length) {
     const cible = blesses[0]!;
+    if (soinGroupe && skill(soinGroupe).puissance >= 30) return { type: 'competence', id: soinGroupe, cible: acteur.uid };
     if (peut('baume')) return { type: 'competence', id: 'baume', cible: cible.uid };
     if (ratio(cible) < 0.3) {
-      if (blesses.length >= 2 && (inv['elixir_vents'] ?? 0) > 0) return { type: 'objet', id: 'elixir_vents', cible: cible.uid };
-      const pot = cible.stats.pvMax - cible.pv > 80 && (inv['tonique'] ?? 0) > 0 ? 'tonique' : (inv['herbe_douce'] ?? 0) > 0 ? 'herbe_douce' : (inv['tonique'] ?? 0) > 0 ? 'tonique' : null;
+      const elixir = ELIXIRS.find((id) => (inv[id] ?? 0) > 0);
+      if (blesses.length >= 2 && elixir) return { type: 'objet', id: elixir, cible: cible.uid };
+      const manque = cible.stats.pvMax - cible.pv;
+      const dispo = POTIONS.filter((id) => (inv[id] ?? 0) > 0);
+      const pot = dispo.find((id) => (item(id).soinPv ?? 0) >= manque * 0.7) ?? dispo[dispo.length - 1];
       if (pot) return { type: 'objet', id: pot, cible: cible.uid };
     }
+  }
+  // PS de la soigneuse : on la recharge pendant les combats de boss.
+  const soigneuse = vivants.find((c) => c.competences.includes('baume'));
+  if (b.boss && soigneuse && soigneuse.ps < 30 && soigneuse.ps < soigneuse.stats.psMax * 0.3) {
+    const ether = ETHERS.find((id) => (inv[id] ?? 0) > 0);
+    if (ether) return { type: 'objet', id: ether, cible: soigneuse.uid };
   }
   const endormi = vivants.find((c) => aStatut(c, 'sommeil') || aStatut(c, 'poison'));
   if (endormi && peut('purification')) return { type: 'competence', id: 'purification', cible: endormi.uid };

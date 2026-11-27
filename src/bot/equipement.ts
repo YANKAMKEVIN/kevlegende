@@ -41,7 +41,7 @@ export function equiperMieux(j: Jeu): void {
   }
 }
 
-const STOCK: Record<string, number> = { herbe_douce: 8, tonique: 6, plume_aube: 3, gouttes_ciel: 4, sel_ecume: 2, elixir_vents: 2 };
+const STOCK: Record<string, number> = { herbe_douce: 8, tonique: 6, plume_aube: 4, gouttes_ciel: 4, sel_ecume: 2, elixir_vents: 2 };
 
 /** Achats dans une boutique : améliorations d'équipement d'abord, puis consommables. */
 export function faireCourses(j: Jeu, articles: readonly string[]): void {

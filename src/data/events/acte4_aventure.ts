@@ -178,7 +178,13 @@ export const ACTE4_AVENTURE: Record<string, Script> = {
     ] },
   ],
   aurele: [
-    { c: 'si', cond: ['fanal4_allume'], alors: [{ c: 'dit', qui: AU, portrait: 'aurele', texte: "Je garderai la flamme. Et cette fois, quand la voix triste reviendra, je lui répondrai." }], sinon: [
+    { c: 'si', cond: ['fanal4_allume'], alors: [
+      { c: 'dit', qui: AU, portrait: 'aurele', texte: "Je garderai la flamme. Et cette fois, quand la voix triste reviendra, je lui répondrai." },
+      { c: 'si', cond: ['acte4_fini', '!acte5'], alors: [
+        { c: 'dit', qui: B, portrait: 'brann', texte: "La coque du Moineau est prête. Cap sur le Royaume Pâle ?" },
+        { c: 'appel', evenement: 'acte5_debut' },
+      ] },
+    ], sinon: [
       { c: 'si', cond: ['!pendentif_aurele'], alors: [
         { c: 'dit', qui: AU, portrait: 'aurele', texte: "Prenez ceci. Ma mère l'a taillé dans la glace du premier hiver ; il ne fond jamais." },
         { c: 'donne', objet: 'pendentif_aurele' },
@@ -215,7 +221,7 @@ export const ACTE4_AVENTURE: Record<string, Script> = {
       { c: 'titre', texte: "Fin de l'Acte IV", sous: 'Quatre Fanaux brillent sur Aérys' },
       { c: 'flag', nom: 'acte4_fini' },
       { c: 'sauve' },
-      { c: 'fin', texte: "L'Acte V, « Le Royaume Pâle », arrive bientôt. Ta sauvegarde t'attendra : termine les quêtes des Cimes de Givre, affronte la Wyverne blanche et renforce ton équipe." },
+      { c: 'appel', evenement: 'acte5_debut' },
     ] },
   ],
 };

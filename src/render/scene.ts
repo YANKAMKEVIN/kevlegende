@@ -25,7 +25,7 @@ interface Objet {
   dessin: () => void;
 }
 
-const ESSENCES: Record<string, Essence> = { col: 'sapin', colline: 'automne', epave: 'brume', phare: 'automne', ambrelune: 'palmier', dunes: 'palmier', ruines: 'palmier', canyon: 'palmier', fanal_sables: 'palmier', givrebourg: 'givre', pentes: 'givre', lac_givre: 'givre', col_blizzard: 'givre', fanal_cimes: 'givre' };
+const ESSENCES: Record<string, Essence> = { col: 'sapin', colline: 'automne', epave: 'brume', phare: 'automne', ambrelune: 'palmier', dunes: 'palmier', ruines: 'palmier', canyon: 'palmier', fanal_sables: 'palmier', givrebourg: 'givre', pentes: 'givre', lac_givre: 'givre', col_blizzard: 'givre', fanal_cimes: 'givre', bordebrume: 'brume', rivage_pale: 'pale', aubefonde: 'pale', jardins_lune: 'pale', palais_pale: 'pale', fanal_premier: 'pale' };
 
 export class Scene {
   readonly ctx: CanvasRenderingContext2D;
@@ -323,6 +323,24 @@ export class Scene {
         const fy = ((i * 137 + t * 38 * prof) % (this.h + 20)) - 10;
         const fx = ((i * 223 + Math.sin(t * 0.8 + i) * 22 + t * 12 * prof) % (this.w + 20)) - 10;
         disque(ctx, fx, fy, 1 + prof * 1.4, rgba('#ffffff', 0.5 + prof * 0.3));
+      }
+    } else if (amb === 'pale') {
+      // Lumière de lune voilée, brume qui dérive et lucioles pâles qui montent.
+      ctx.fillStyle = rgba('#3b2f66', 0.16);
+      ctx.fillRect(0, 0, this.w, this.h);
+      for (let i = 0; i < 4; i++) {
+        const bx = ((i * 331 + t * 14) % (this.w + 500)) - 250;
+        const by = (i * 197 + Math.sin(t * 0.3 + i) * 30) % this.h;
+        const g = ctx.createRadialGradient(bx, by, 10, bx, by, 240);
+        g.addColorStop(0, rgba('#d8cff0', 0.2));
+        g.addColorStop(1, rgba('#d8cff0', 0));
+        ctx.fillStyle = g;
+        ctx.fillRect(bx - 240, by - 240, 480, 480);
+      }
+      for (let i = 0; i < 26; i++) {
+        const fy = this.h - (((i * 151 + t * (14 + (i % 4) * 6)) % (this.h + 30)) - 15);
+        const fx = (i * 239 + Math.sin(t * 0.9 + i * 1.7) * 18) % this.w;
+        disque(ctx, fx, fy, 1.6 + (i % 3) * 0.6, rgba('#e6dcff', 0.35 + 0.35 * Math.sin(t * 2 + i) ** 2));
       }
     } else if (amb === 'brume' || amb === 'nuit') {
       ctx.fillStyle = rgba(amb === 'nuit' ? '#1c2547' : PAL.brume, 0.28);

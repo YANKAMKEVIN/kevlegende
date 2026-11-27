@@ -4,7 +4,7 @@ import { ctx2d, disque, ellipse, mix, rgba, shade, toile } from './util';
 
 const cache = new Map<string, HTMLCanvasElement>();
 
-export type Essence = 'feuillu' | 'sapin' | 'brume' | 'automne' | 'palmier' | 'givre';
+export type Essence = 'feuillu' | 'sapin' | 'brume' | 'automne' | 'palmier' | 'givre' | 'pale';
 
 /** Arbre d'une case de large, ~2 cases de haut ; le pied est en bas du sprite. */
 export function spriteArbre(L: number, essence: Essence, variante: number): HTMLCanvasElement {
@@ -17,8 +17,8 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
   const x = ctx2d(c);
   const cx = w / 2;
   const pied = h - L * 0.2;
-  if (essence === 'palmier') {
-    palmier(x, L, cx, pied, variante);
+  if (essence === 'palmier' || essence === 'pale') {
+    (essence === 'palmier' ? palmier : arbreMort)(x, L, cx, pied, variante);
     cache.set(k, c);
     return c;
   }
@@ -58,7 +58,7 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
       }
     }
   } else {
-    const palettes: Record<Exclude<Essence, 'sapin' | 'palmier' | 'givre'>, [string, string, string]> = {
+    const palettes: Record<Exclude<Essence, 'sapin' | 'palmier' | 'givre' | 'pale'>, [string, string, string]> = {
       feuillu: [PAL.feuillageFonce, PAL.feuillage, PAL.feuillageClair],
       automne: ['#8a4b2a', '#d7863c', '#f2b84b'],
       brume: ['#3a3456', '#5b4b7a', '#8a7aac'],
@@ -143,4 +143,42 @@ function palmier(x: CanvasRenderingContext2D, L: number, cx: number, pied: numbe
   }
   for (let i = 0; i < 3; i++) disque(x, tete.x - L * 0.08 + i * L * 0.08, tete.y + L * 0.1, L * 0.06, '#c0622a');
   disque(x, tete.x, tete.y, L * 0.1, '#3f7a3c');
+}
+
+/** Arbre mort du Royaume Pâle : tronc tordu couleur d'os, branches nues, quelques feuilles de lune. */
+function arbreMort(x: CanvasRenderingContext2D, L: number, cx: number, pied: number, variante: number): void {
+  ellipse(x, cx, pied - L * 0.02, L * 0.36, L * 0.1, rgba('#1c1630', 0.22));
+  const bois = mix('#b3abc4', '#d6d0e2', variante);
+  const branche = (x0: number, y0: number, a: number, lg: number, ep: number, n: number) => {
+    const x1 = x0 + Math.cos(a) * lg;
+    const y1 = y0 + Math.sin(a) * lg;
+    x.strokeStyle = shade(bois, -0.25 + n * 0.08);
+    x.lineWidth = ep;
+    x.lineCap = 'round';
+    x.beginPath();
+    x.moveTo(x0, y0);
+    x.quadraticCurveTo((x0 + x1) / 2 + Math.sin(a * 3 + variante * 7) * lg * 0.25, (y0 + y1) / 2, x1, y1);
+    x.stroke();
+    if (n > 0) {
+      branche(x1, y1, a - 0.5 - variante * 0.2, lg * 0.68, ep * 0.62, n - 1);
+      branche(x1, y1, a + 0.45 + (1 - variante) * 0.2, lg * 0.62, ep * 0.6, n - 1);
+    } else if ((Math.round(x1 * 7 + y1 * 3) % 3) === 0) {
+      disque(x, x1, y1, L * 0.07, rgba('#d9ccff', 0.85));
+      disque(x, x1, y1, L * 0.13, rgba('#b8a6ff', 0.25));
+    }
+  };
+  // Tronc tordu, avec ses racines.
+  x.fillStyle = bois;
+  x.beginPath();
+  x.moveTo(cx - L * 0.2, pied);
+  x.quadraticCurveTo(cx - L * 0.06, pied - L * 0.4, cx - L * 0.1 + variante * L * 0.1, pied - L * 0.95);
+  x.lineTo(cx + L * 0.06 + variante * L * 0.1, pied - L * 0.95);
+  x.quadraticCurveTo(cx + L * 0.08, pied - L * 0.4, cx + L * 0.22, pied);
+  x.fill();
+  x.fillStyle = rgba('#5a5176', 0.35);
+  x.fillRect(cx + L * 0.02, pied - L * 0.8, L * 0.05, L * 0.75);
+  const hx = cx - L * 0.02 + variante * L * 0.1;
+  branche(hx, pied - L * 0.9, -Math.PI / 2 - 0.55, L * 0.42, L * 0.12, 2);
+  branche(hx, pied - L * 0.9, -Math.PI / 2 + 0.5, L * 0.45, L * 0.12, 2);
+  branche(hx, pied - L * 0.9, -Math.PI / 2 + 0.05, L * 0.36, L * 0.1, 1);
 }

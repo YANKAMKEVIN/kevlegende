@@ -121,6 +121,12 @@ export function fondCombat(carte: string): string {
     grotte_givre: 'grotte_givre',
     col_blizzard: 'blizzard',
     fanal_cimes: 'cimes',
+    bordebrume: 'bordebrume',
+    rivage_pale: 'rivage',
+    aubefonde: 'aubefonde',
+    jardins_lune: 'jardins',
+    palais_pale: 'palais',
+    fanal_premier: 'premier',
   };
   return `fond_${table[carte] ?? 'village'}`;
 }
@@ -128,8 +134,8 @@ export function fondCombat(carte: string): string {
 /** Toutes les illustrations du jeu (pour le préchargement en tâche de fond). */
 export const ARTS: readonly string[] = [
   'titre',
-  ...['ael', 'mira', 'brann', 'odile', 'fendril', 'tilda', 'rosa', 'fenouil', 'bertille', 'pim', 'gus', 'oswin', 'tobias', 'pip', 'maelle', 'marin', 'nell', 'creux', 'roi', 'sentinelle', 'villageois', 'villageoise', 'nour', 'amastan', 'azrou', 'kahina', 'tafat', 'ilyes', 'sadia', 'yanis', 'zahra', 'omar', 'assia', 'lalla', 'aubin', 'solene', 'gaspard', 'ines', 'agathe', 'joris', 'leon', 'mathis', 'helene', 'aurele'].map((p) => `portrait_${p}`),
-  ...['village', 'bois', 'col', 'grotte', 'colline', 'port', 'recifs', 'epave', 'phare', 'oasis', 'dunes', 'ruines', 'tombeau', 'canyon', 'tour', 'givrebourg', 'pentes', 'lac', 'grotte_givre', 'blizzard', 'cimes'].map((f) => `fond_${f}`),
+  ...['ael', 'mira', 'brann', 'odile', 'fendril', 'tilda', 'rosa', 'fenouil', 'bertille', 'pim', 'gus', 'oswin', 'tobias', 'pip', 'maelle', 'marin', 'nell', 'creux', 'roi', 'sentinelle', 'villageois', 'villageoise', 'nour', 'amastan', 'azrou', 'kahina', 'tafat', 'ilyes', 'sadia', 'yanis', 'zahra', 'omar', 'assia', 'lalla', 'aubin', 'solene', 'gaspard', 'ines', 'agathe', 'joris', 'leon', 'mathis', 'helene', 'aurele', 'selene', 'corin', 'yse', 'lio', 'ambroise', 'basile', 'pia', 'tristan', 'lune', 'morvane', 'veilleur'].map((p) => `portrait_${p}`),
+  ...['village', 'bois', 'col', 'grotte', 'colline', 'port', 'recifs', 'epave', 'phare', 'oasis', 'dunes', 'ruines', 'tombeau', 'canyon', 'tour', 'givrebourg', 'pentes', 'lac', 'grotte_givre', 'blizzard', 'cimes', 'bordebrume', 'rivage', 'aubefonde', 'jardins', 'palais', 'premier'].map((f) => `fond_${f}`),
 ];
 
 /** Précharge les portraits puis les décors, quelques images à la fois, sans gêner le jeu. */

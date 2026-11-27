@@ -39,6 +39,11 @@ const L: SkillDef[] = [
   { id: 'aurore', nom: 'Aurore', desc: 'Une lumière boréale soigne tout le groupe.', cout: 22, cible: 'allies', type: 'soin', element: 'lumiere', puissance: 32 },
   { id: 'tranche_aurore', nom: "Tranche-Aurore", desc: 'Une lame chargée de lumière boréale. Lumière.', cout: 16, cible: 'ennemi', type: 'physique', element: 'lumiere', puissance: 32 },
   { id: 'pluie_meteores', nom: 'Pluie de Météores', desc: 'Des étoiles s’abattent sur les ennemis. Lumière, tous.', cout: 28, cible: 'ennemis', type: 'magique', element: 'lumiere', puissance: 25 },
+  // --- Acte V ---
+  { id: 'enclume_celeste', nom: 'Enclume Céleste', desc: 'Un coup qui fait trembler le ciel. Terre.', cout: 20, cible: 'ennemi', type: 'physique', element: 'terre', puissance: 40 },
+  { id: 'lame_fanal', nom: 'Lame du Fanal', desc: 'La flamme des quatre Fanaux dans une seule lame. Lumière, tous.', cout: 24, cible: 'ennemis', type: 'physique', element: 'lumiere', puissance: 26 },
+  { id: 'chant_lune', nom: 'Chant de Lune', desc: 'Une berceuse qui referme toutes les blessures.', cout: 30, cible: 'allies', type: 'soin', element: 'lumiere', puissance: 44 },
+  { id: 'constellation', nom: 'Constellation', desc: 'Le ciel entier se dessine au-dessus des ennemis. Lumière, tous.', cout: 34, cible: 'ennemis', type: 'magique', element: 'lumiere', puissance: 32 },
   // --- Ennemis ---
   { id: 'e_charge', nom: 'Charge', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 11 },
   { id: 'e_morsure', nom: 'Morsure', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 13 },
@@ -69,6 +74,12 @@ const L: SkillDef[] = [
   { id: 'e_blizzard', nom: 'Blizzard', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'eau', puissance: 16, statut: { id: 'affaibli', chance: 0.2, tours: 2 } },
   { id: 'e_avalanche', nom: 'Avalanche', desc: '', cout: 0, cible: 'ennemis', type: 'physique', element: 'terre', puissance: 18 },
   { id: 'e_couronne', nom: 'Couronne Pâle', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'ombre', puissance: 21, statut: { id: 'affaibli', chance: 0.3, tours: 2 } },
+  { id: 'e_sommeil_pale', nom: 'Berceuse Pâle', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'ombre', puissance: 12, statut: { id: 'sommeil', chance: 0.18, tours: 2 } },
+  { id: 'e_passage', nom: 'Dernier Passage', desc: '', cout: 0, cible: 'ennemi', type: 'magique', element: 'ombre', puissance: 28 },
+  { id: 'e_glas', nom: 'Glas', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'ombre', puissance: 19, statut: { id: 'affaibli', chance: 0.3, tours: 2 } },
+  { id: 'e_ronces', nom: 'Ronces', desc: '', cout: 0, cible: 'ennemis', type: 'physique', element: 'terre', puissance: 17, statut: { id: 'poison', chance: 0.35, tours: 3 } },
+  { id: 'e_eclipse', nom: 'Éclipse', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'ombre', puissance: 24 },
+  { id: 'e_neant', nom: 'Néant', desc: '', cout: 0, cible: 'ennemi', type: 'magique', element: 'ombre', puissance: 34 },
   { id: 'e_engloutir', nom: 'Engloutir', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 26 },
 ];
 
