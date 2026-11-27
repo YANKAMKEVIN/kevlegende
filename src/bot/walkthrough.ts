@@ -19,8 +19,10 @@ export const REPOS: readonly PointRepos[] = [
   { carte: 'clairval', ancre: 'H', si: ['!acte2'] },
   { carte: 'port', ancre: 'H', si: ['acte2', '!acte3'] },
   { carte: 'recifs', ancre: 'M', si: ['acte2', '!acte3'] },
-  { carte: 'ambrelune', ancre: 'H', si: ['acte3'] },
-  { carte: 'canyon', ancre: 'K', si: ['acte3'] },
+  { carte: 'ambrelune', ancre: 'H', si: ['acte3', '!acte4'] },
+  { carte: 'canyon', ancre: 'K', si: ['acte3', '!acte4'] },
+  { carte: 'givrebourg', ancre: 'H', si: ['acte4'] },
+  { carte: 'col_blizzard', ancre: 'K', si: ['acte4', 'braises_reunies'] },
 ];
 
 export const ACTE1: readonly Etape[] = [
@@ -115,4 +117,43 @@ export const ACTE3: readonly Etape[] = [
   { type: 'interagir', carte: 'fanal_sables', ancre: '1', jusqua: 'acte3_fini' },
 ];
 
-export const AVENTURE: readonly Etape[] = [...ACTE1, ...ACTE2, ...ACTE3];
+export const ACTE4: readonly Etape[] = [
+  { type: 'parler', carte: 'givrebourg', ancre: 'J', jusqua: 'aubin_vu' },
+  { type: 'coffres', carte: 'givrebourg' },
+  { type: 'parler', carte: 'givrebourg', ancre: 'H', jusqua: 'soupe_solene' },
+  { type: 'parler', carte: 'givrebourg', ancre: 'K', jusqua: 'quete_yaks' },
+  { type: 'parler', carte: 'givrebourg', ancre: 'I', jusqua: 'quete_fleurs' },
+  { type: 'boutique', carte: 'givrebourg', ancre: 'G' },
+  { type: 'boutique', carte: 'givrebourg', ancre: 'F' },
+  { type: 'interagir', carte: 'pentes', ancre: '1', jusqua: 'yak1', niveau: 30 },
+  { type: 'interagir', carte: 'pentes', ancre: '2', jusqua: 'yak2' },
+  { type: 'interagir', carte: 'pentes', ancre: '3', jusqua: 'yak3' },
+  { type: 'coffres', carte: 'pentes' },
+  { type: 'aller', carte: 'pentes', ancre: 'D', jusqua: 'yeti_vaincu', niveau: 31 },
+  { type: 'interagir', carte: 'pentes', ancre: 'Z', jusqua: 'braise1' },
+  { type: 'parler', carte: 'givrebourg', ancre: 'K', jusqua: 'yaks_rendus' },
+  { type: 'parler', carte: 'lac_givre', ancre: 'M', jusqua: 'mathis_vu' },
+  { type: 'coffres', carte: 'lac_givre' },
+  { type: 'aller', carte: 'lac_givre', ancre: 'D', jusqua: 'serpent_givre_vaincu', niveau: 33 },
+  { type: 'interagir', carte: 'lac_givre', ancre: 'Z', jusqua: 'braise2' },
+  { type: 'interagir', carte: 'grotte_givre', ancre: '1', jusqua: 'brasero_g1', niveau: 33 },
+  { type: 'interagir', carte: 'grotte_givre', ancre: '2', jusqua: 'brasero_g2' },
+  { type: 'interagir', carte: 'grotte_givre', ancre: '3', jusqua: 'brasero_g3' },
+  { type: 'aller', carte: 'grotte_givre', ancre: 'D', jusqua: 'chevalier_vaincu', niveau: 35 },
+  { type: 'interagir', carte: 'grotte_givre', ancre: 'Z', jusqua: 'braise3' },
+  { type: 'coffres', carte: 'grotte_givre' },
+  { type: 'parler', carte: 'givrebourg', ancre: 'I', jusqua: 'fleurs_rendues' },
+  { type: 'boutique', carte: 'givrebourg', ancre: 'G' },
+  { type: 'parler', carte: 'givrebourg', ancre: 'J', jusqua: 'braises_reunies' },
+  { type: 'parler', carte: 'col_blizzard', ancre: 'K', jusqua: 'quete_wyverne' },
+  { type: 'coffres', carte: 'col_blizzard' },
+  { type: 'boutique', carte: 'givrebourg', ancre: 'F' },
+  { type: 'coffres', carte: 'fanal_cimes' },
+  { type: 'aller', carte: 'fanal_cimes', ancre: 'D', jusqua: 'reflet_vaincu', niveau: 38 },
+  { type: 'interagir', carte: 'fanal_cimes', ancre: 'H', jusqua: 'aurele_libre' },
+  { type: 'parler', carte: 'fanal_cimes', ancre: 'A', jusqua: 'pendentif_aurele' },
+  { type: 'interagir', carte: 'col_blizzard', ancre: 'O', jusqua: 'wyverne_vaincue', niveau: 42 },
+  { type: 'interagir', carte: 'fanal_cimes', ancre: '1', jusqua: 'acte4_fini' },
+];
+
+export const AVENTURE: readonly Etape[] = [...ACTE1, ...ACTE2, ...ACTE3, ...ACTE4];

@@ -115,6 +115,12 @@ export function fondCombat(carte: string): string {
     tombeau: 'tombeau',
     canyon: 'canyon',
     fanal_sables: 'tour',
+    givrebourg: 'givrebourg',
+    pentes: 'pentes',
+    lac_givre: 'lac',
+    grotte_givre: 'grotte_givre',
+    col_blizzard: 'blizzard',
+    fanal_cimes: 'cimes',
   };
   return `fond_${table[carte] ?? 'village'}`;
 }
@@ -122,8 +128,8 @@ export function fondCombat(carte: string): string {
 /** Toutes les illustrations du jeu (pour le préchargement en tâche de fond). */
 export const ARTS: readonly string[] = [
   'titre',
-  ...['ael', 'mira', 'brann', 'odile', 'fendril', 'tilda', 'rosa', 'fenouil', 'bertille', 'pim', 'gus', 'oswin', 'tobias', 'pip', 'maelle', 'marin', 'nell', 'creux', 'roi', 'sentinelle', 'villageois', 'villageoise', 'nour', 'amastan', 'azrou', 'kahina', 'tafat', 'ilyes', 'sadia', 'yanis', 'zahra', 'omar', 'assia', 'lalla'].map((p) => `portrait_${p}`),
-  ...['village', 'bois', 'col', 'grotte', 'colline', 'port', 'recifs', 'epave', 'phare', 'oasis', 'dunes', 'ruines', 'tombeau', 'canyon', 'tour'].map((f) => `fond_${f}`),
+  ...['ael', 'mira', 'brann', 'odile', 'fendril', 'tilda', 'rosa', 'fenouil', 'bertille', 'pim', 'gus', 'oswin', 'tobias', 'pip', 'maelle', 'marin', 'nell', 'creux', 'roi', 'sentinelle', 'villageois', 'villageoise', 'nour', 'amastan', 'azrou', 'kahina', 'tafat', 'ilyes', 'sadia', 'yanis', 'zahra', 'omar', 'assia', 'lalla', 'aubin', 'solene', 'gaspard', 'ines', 'agathe', 'joris', 'leon', 'mathis', 'helene', 'aurele'].map((p) => `portrait_${p}`),
+  ...['village', 'bois', 'col', 'grotte', 'colline', 'port', 'recifs', 'epave', 'phare', 'oasis', 'dunes', 'ruines', 'tombeau', 'canyon', 'tour', 'givrebourg', 'pentes', 'lac', 'grotte_givre', 'blizzard', 'cimes'].map((f) => `fond_${f}`),
 ];
 
 /** Précharge les portraits puis les décors, quelques images à la fois, sans gêner le jeu. */

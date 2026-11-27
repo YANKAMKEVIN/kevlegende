@@ -64,14 +64,14 @@ describe('Équipement du bot', () => {
   });
 });
 
-describe('Le bot termine les trois actes', () => {
+describe('Le bot termine les quatre actes', () => {
   it('sans défaite, avec toutes les quêtes', () => {
     const j = Jeu.nouvelle(MONDE, 1);
     const journal = new Bot(j).jouer(AVENTURE);
     expect(journal.fini).toBe(true);
     expect(journal.defaites).toBe(0);
     expect(Object.values(j.p.quetes).every((q) => q === 'terminee')).toBe(true);
-    expect(Object.keys(j.p.quetes)).toHaveLength(13);
+    expect(Object.keys(j.p.quetes)).toHaveLength(18);
     expect(j.p.equipe.map((h) => h.id)).toEqual(['ael', 'mira', 'brann', 'nour']);
   });
   it('signale clairement un blocage', () => {

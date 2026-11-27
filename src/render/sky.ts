@@ -19,6 +19,7 @@ const TEINTES: Record<Ambiance, Teintes> = {
   brume: { haut: '#3e3560', milieu: '#6d5b8c', bas: '#a596b8', nuage: '#c9bedb', brume: '#8f80ad' },
   grotte: { haut: '#0b0c16', milieu: '#121426', bas: '#191c33', nuage: '#232744', brume: '#14162a' },
   desert: { haut: '#5fa8d6', milieu: '#f2d49a', bas: '#f5b968', nuage: '#fff1d6', brume: '#f2d2a0' },
+  neige: { haut: '#86b4dc', milieu: '#cfe2f3', bas: '#f1f5fb', nuage: '#ffffff', brume: '#e2ecf7' },
   interieur: { haut: '#1a1320', milieu: '#1f1726', bas: '#24192c', nuage: '#2a2032', brume: '#1f1726' },
 };
 

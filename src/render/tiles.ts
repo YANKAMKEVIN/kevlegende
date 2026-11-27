@@ -2,6 +2,7 @@
 import { PAL } from './palette';
 import { alea, disque, ellipse, hash, mix, rgba, rondRect, shade } from './util';
 import { decorDesert, peindreDesert } from './tiles_desert';
+import { decorNeige, peindreNeige } from './tiles_neige';
 
 export type Voisin = (dx: number, dy: number) => string;
 
@@ -12,10 +13,11 @@ export const estVert = (ch: string) => VERT.has(ch);
 
 /** Sol peint sous les tuiles décor (arbres, rochers…) selon l'ambiance de la carte. */
 export function solSous(ch: string, fond: string): string {
-  if (ch === 'T' || ch === 'b') return fond === 's' ? 's' : '.';
-  if (ch === '#') return fond === 'c' ? 'c' : fond;
+  if (ch === 'T' || ch === 'b') return fond === 's' || fond === 'n' ? fond : '.';
+  if (ch === '#') return fond;
   if (ch === 'g' || ch === 'q') return fond === 'c' ? 'l' : 's';
-  if (ch === '*') return 'c';
+  if (ch === 'u') return fond === 'a' ? 'a' : 'n';
+  if (ch === '*') return fond === 'a' ? 'a' : 'c';
   if (ch === 'r') return 'k';
   return ch;
 }
@@ -78,7 +80,7 @@ export function peindreTuile(ctx: CanvasRenderingContext2D, ch: string, tx: numb
   if (ch === 'T' && sol === 's' && autour.some(estVert)) sol = '.';
   // Cactus, grès et palmiers posés dans les dunes : même sable ondulé autour.
   else if ((ch === 'q' || ch === 'g' || ch === 'T') && sol === 's' && autour.filter((n) => n === 'y').length >= 2) sol = 'y';
-  if (peindreDesert(ctx, sol, tx, ty, L, v, r)) return;
+  if (peindreDesert(ctx, sol, tx, ty, L, v, r) || peindreNeige(ctx, sol, tx, ty, L, v, r)) return;
   switch (sol) {
     case '.':
     case ',':
@@ -294,6 +296,7 @@ export function peindreDecorBas(ctx: CanvasRenderingContext2D, ch: string, tx: n
   const y = ty * L;
   const r = alea(hash(tx, ty, 11) * 4294967296);
   if (ch === 'g' || ch === 'q') return decorDesert(ctx, ch, tx, ty, L, v, r);
+  if (ch === 'u') return decorNeige(ctx, ch, tx, ty, L, v, r);
   if (ch === '#') {
     ellipse(ctx, x + L / 2, y + L * 0.82, L * 0.44, L * 0.14, rgba('#000000', 0.2));
     ctx.fillStyle = PAL.roche;

@@ -4,7 +4,7 @@ import { ctx2d, disque, ellipse, mix, rgba, shade, toile } from './util';
 
 const cache = new Map<string, HTMLCanvasElement>();
 
-export type Essence = 'feuillu' | 'sapin' | 'brume' | 'automne' | 'palmier';
+export type Essence = 'feuillu' | 'sapin' | 'brume' | 'automne' | 'palmier' | 'givre';
 
 /** Arbre d'une case de large, ~2 cases de haut ; le pied est en bas du sprite. */
 export function spriteArbre(L: number, essence: Essence, variante: number): HTMLCanvasElement {
@@ -26,8 +26,8 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
   x.fillRect(cx - L * 0.09, pied - L * 0.7, L * 0.18, L * 0.7);
   x.fillStyle = shade(PAL.tronc, -0.3);
   x.fillRect(cx + L * 0.02, pied - L * 0.7, L * 0.07, L * 0.7);
-  if (essence === 'sapin') {
-    const vert = mix(PAL.feuillageFonce, PAL.feuillage, variante * 0.4);
+  if (essence === 'sapin' || essence === 'givre') {
+    const vert = essence === 'givre' ? mix('#2f5a4f', '#3f6f62', variante * 0.5) : mix(PAL.feuillageFonce, PAL.feuillage, variante * 0.4);
     for (let i = 0; i < 3; i++) {
       const base = pied - L * (0.45 + i * 0.42);
       const larg = L * (0.68 - i * 0.16);
@@ -44,9 +44,21 @@ export function spriteArbre(L: number, essence: Essence, variante: number): HTML
       x.lineTo(cx, base - L * 0.68);
       x.lineTo(cx - larg * 0.1, base - L * 0.05);
       x.fill();
+      if (essence === 'givre') {
+        // Neige posée sur chaque étage : festons blancs et pointe enneigée.
+        x.fillStyle = '#f4f8fc';
+        x.beginPath();
+        x.moveTo(cx - larg * 0.55, base - L * 0.22);
+        x.lineTo(cx, base - L * 0.7);
+        x.lineTo(cx + larg * 0.55, base - L * 0.22);
+        for (let k = 4; k >= 0; k--) x.quadraticCurveTo(cx - larg * 0.55 + (larg * 1.1 * (k + 0.5)) / 5, base - L * (0.12 + (k % 2) * 0.06), cx - larg * 0.55 + (larg * 1.1 * k) / 5, base - L * 0.22);
+        x.fill();
+        x.fillStyle = rgba('#a9c2df', 0.55);
+        x.fillRect(cx, base - L * 0.4, larg * 0.4, L * 0.04);
+      }
     }
   } else {
-    const palettes: Record<Exclude<Essence, 'sapin' | 'palmier'>, [string, string, string]> = {
+    const palettes: Record<Exclude<Essence, 'sapin' | 'palmier' | 'givre'>, [string, string, string]> = {
       feuillu: [PAL.feuillageFonce, PAL.feuillage, PAL.feuillageClair],
       automne: ['#8a4b2a', '#d7863c', '#f2b84b'],
       brume: ['#3a3456', '#5b4b7a', '#8a7aac'],

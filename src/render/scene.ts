@@ -9,7 +9,7 @@ import { PAL } from './palette';
 import { spriteCoffre, spriteProp } from './props';
 import { Ciel } from './sky';
 import { APP_HEROS, spritePerso } from './sprites';
-import { ctx2d, rgba, toile } from './util';
+import { ctx2d, disque, rgba, toile } from './util';
 
 export interface PosVisuelle {
   x: number;
@@ -25,7 +25,7 @@ interface Objet {
   dessin: () => void;
 }
 
-const ESSENCES: Record<string, Essence> = { col: 'sapin', colline: 'automne', epave: 'brume', phare: 'automne', ambrelune: 'palmier', dunes: 'palmier', ruines: 'palmier', canyon: 'palmier', fanal_sables: 'palmier' };
+const ESSENCES: Record<string, Essence> = { col: 'sapin', colline: 'automne', epave: 'brume', phare: 'automne', ambrelune: 'palmier', dunes: 'palmier', ruines: 'palmier', canyon: 'palmier', fanal_sables: 'palmier', givrebourg: 'givre', pentes: 'givre', lac_givre: 'givre', col_blizzard: 'givre', fanal_cimes: 'givre' };
 
 export class Scene {
   readonly ctx: CanvasRenderingContext2D;
@@ -264,7 +264,8 @@ export class Scene {
       const n = ctx2d(this.nuit);
       n.globalCompositeOperation = 'source-over';
       n.clearRect(0, 0, this.w, this.h);
-      n.fillStyle = 'rgba(6,7,18,0.82)';
+      // La glace renvoie la lumière : grotte de givre bleutée et bien moins sombre.
+      n.fillStyle = j.carte().def.solDefaut === 'a' ? 'rgba(14,30,62,0.5)' : 'rgba(6,7,18,0.82)';
       n.fillRect(0, 0, this.w, this.h);
       n.globalCompositeOperation = 'destination-out';
       const trou = (x: number, y: number, r: number) => {
@@ -312,6 +313,16 @@ export class Scene {
         const sx = ((i * 97 + t * (60 + (i % 5) * 18)) % (this.w + 40)) - 20;
         const sy = ((i * 211) % this.h) + Math.sin(t * 1.3 + i) * 12;
         ctx.fillRect(sx, sy, 2 + (i % 3), 1.2);
+      }
+    } else if (amb === 'neige') {
+      // Lumière froide et flocons qui tombent en dérivant.
+      ctx.fillStyle = rgba('#cfe2ff', 0.1);
+      ctx.fillRect(0, 0, this.w, this.h);
+      for (let i = 0; i < 70; i++) {
+        const prof = 0.5 + (i % 4) * 0.25;
+        const fy = ((i * 137 + t * 38 * prof) % (this.h + 20)) - 10;
+        const fx = ((i * 223 + Math.sin(t * 0.8 + i) * 22 + t * 12 * prof) % (this.w + 20)) - 10;
+        disque(ctx, fx, fy, 1 + prof * 1.4, rgba('#ffffff', 0.5 + prof * 0.3));
       }
     } else if (amb === 'brume' || amb === 'nuit') {
       ctx.fillStyle = rgba(amb === 'nuit' ? '#1c2547' : PAL.brume, 0.28);
