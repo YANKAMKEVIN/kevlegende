@@ -3,6 +3,7 @@ import type { PropType } from '../core/world/mapdef';
 import { PAL } from './palette';
 import { DECORS } from './props_decors';
 import { DESERT } from './props_desert';
+import { NEIGES } from './props_neige';
 import { ctx2d, disque, ellipse, rgba, rondRect, shade, toile } from './util';
 
 export interface SpriteProp {
@@ -255,6 +256,7 @@ const DESSINS: Partial<Record<PropType, Dessin>> = {
   },
   ...DECORS,
   ...DESERT,
+  ...NEIGES,
 };
 
 /** Coffre fermé ou ouvert (une case). */

@@ -184,19 +184,17 @@ export class VueCombat {
       const ih = img.height * r;
       ctx.drawImage(img, (w - iw) / 2, (h - ih) * 0.7, iw, ih);
     } else {
-      const grotte = carte.startsWith('grotte') || carte === 'tombeau';
-      const brume = carte === 'epave';
-      const sable = ['ambrelune', 'dunes', 'ruines', 'canyon', 'fanal_sables'].includes(carte);
       const g = ctx.createLinearGradient(0, 0, 0, h);
-      g.addColorStop(0, grotte ? '#141629' : brume ? '#3e3560' : sable ? '#5fa8d6' : '#79c0e2');
-      g.addColorStop(0.6, grotte ? '#2a2e4a' : brume ? '#8f80ad' : sable ? '#f2d49a' : '#cfe9f5');
-      g.addColorStop(1, grotte ? '#3a3f5e' : brume ? '#5b4b7a' : sable ? '#f5b968' : '#f6e7c8');
+      const [haut, milieu, bas, sol] = teintesFond(carte);
+      g.addColorStop(0, haut);
+      g.addColorStop(0.6, milieu);
+      g.addColorStop(1, bas);
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
-      ctx.fillStyle = grotte ? PAL.grotteSol : brume ? '#6f5640' : sable ? '#e9c27e' : PAL.herbe;
+      ctx.fillStyle = sol;
       ctx.beginPath();
-      const sol = h * (h > w * 1.1 ? 0.5 : 0.62);
-      ctx.ellipse(w / 2, sol + h * 0.18, w * 0.8, h * 0.24, 0, 0, Math.PI * 2);
+      const ys = h * (h > w * 1.1 ? 0.5 : 0.62);
+      ctx.ellipse(w / 2, ys + h * 0.18, w * 0.8, h * 0.24, 0, 0, Math.PI * 2);
       ctx.fill();
     }
     // Voile sombre léger pour la lisibilité de l'interface.
@@ -339,4 +337,14 @@ export class VueCombat {
       fx -= 13;
     }
   }
+}
+
+/** Couleurs du décor de repli (sans illustration) : ciel haut, milieu, bas et sol. */
+function teintesFond(carte: string): readonly [string, string, string, string] {
+  if (carte === 'grotte_givre') return ['#1c2e4a', '#3f6a96', '#7fb0d6', '#8ea7c6'];
+  if (carte.startsWith('grotte') || carte === 'tombeau') return ['#141629', '#2a2e4a', '#3a3f5e', PAL.grotteSol];
+  if (carte === 'epave') return ['#3e3560', '#8f80ad', '#5b4b7a', '#6f5640'];
+  if (['ambrelune', 'dunes', 'ruines', 'canyon', 'fanal_sables'].includes(carte)) return ['#5fa8d6', '#f2d49a', '#f5b968', '#e9c27e'];
+  if (['givrebourg', 'pentes', 'lac_givre', 'col_blizzard', 'fanal_cimes'].includes(carte)) return ['#86b4dc', '#cfe2f3', '#f1f5fb', '#e6eef7'];
+  return ['#79c0e2', '#cfe9f5', '#f6e7c8', PAL.herbe];
 }

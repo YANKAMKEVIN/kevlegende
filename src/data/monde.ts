@@ -6,6 +6,8 @@ import { ACTE1_CLAIRVAL } from './events/acte1_clairval';
 import { ACTE2 } from './events/acte2';
 import { ACTE3_AMBRELUNE } from './events/acte3_ambrelune';
 import { ACTE3_AVENTURE } from './events/acte3_aventure';
+import { ACTE4_AVENTURE } from './events/acte4_aventure';
+import { ACTE4_GIVREBOURG } from './events/acte4_givrebourg';
 import { CARTES } from './maps';
 
 const QUETES: QuestDef[] = [
@@ -21,12 +23,17 @@ const QUETES: QuestDef[] = [
   { id: 'q_nour', nom: "L'astromancienne", desc: 'Retrouver Nour, la nièce du chef Amastan, aux Ruines de Sablon.', acte: 3, principale: true },
   { id: 'q_puits', nom: 'Les puits des dunes', desc: 'Dégager les trois vieux puits des Dunes Chantantes pour Tafat.', acte: 3, principale: false },
   { id: 'q_tablettes', nom: 'Les Tablettes du Soleil', desc: "Rapporter à Ilyes les trois tablettes d'argile cachées par les anciens.", acte: 3, principale: false },
+  { id: 'q_cimes', nom: 'Le Fanal des Cimes', desc: 'Franchir le Col du Blizzard et rallumer le Fanal au sommet des Cimes de Givre.', acte: 4, principale: true },
+  { id: 'q_braises', nom: "Les braises d'Aurèle", desc: 'Retrouver les trois braises cachées par la gardienne et les rapporter à Maître Aubin.', acte: 4, principale: true },
+  { id: 'q_yaks', nom: 'Le troupeau dispersé', desc: 'Retrouver les trois yacks de Joris égarés sur les Pentes Blanches.', acte: 4, principale: false },
+  { id: 'q_fleurs', nom: 'Fleurs-de-givre', desc: 'Rapporter trois fleurs-de-givre à Mère Agathe, l’herboriste.', acte: 4, principale: false },
+  { id: 'q_wyverne', nom: 'La Wyverne blanche', desc: "Vaincre la Wyverne qui niche sur la corniche du Col du Blizzard, pour Hélène.", acte: 4, principale: false },
   { id: 'q_ver', nom: 'Le Ver Ancien', desc: 'Réveiller et vaincre le Ver Ancien, sous les ossements des dunes, pour Kahina.', acte: 3, principale: false },
 ];
 
 export const MONDE: Monde = {
   cartes: CARTES,
-  evenements: { ...ACTE1_CLAIRVAL, ...ACTE1_AVENTURE, ...ACTE2, ...ACTE3_AMBRELUNE, ...ACTE3_AVENTURE },
+  evenements: { ...ACTE1_CLAIRVAL, ...ACTE1_AVENTURE, ...ACTE2, ...ACTE3_AMBRELUNE, ...ACTE3_AVENTURE, ...ACTE4_GIVREBOURG, ...ACTE4_AVENTURE },
   boutiques: {
     clairval: { nom: "L'Échoppe de Tilda", articles: ['herbe_douce', 'sel_ecume', 'gouttes_ciel', 'bombe_braise', 'fiole_givre', 'sabre_voile', 'arc_saule', 'veste_cuir'] },
     port_provisions: { nom: 'Provisions de Corentin', articles: ['herbe_douce', 'tonique', 'gouttes_ciel', 'sel_ecume', 'plume_aube', 'bombe_braise', 'fiole_givre', 'galet_tonnerre'] },
@@ -35,11 +42,21 @@ export const MONDE: Monde = {
     ambrelune_provisions: { nom: "L'Étal de Sadia", articles: ['tonique', 'datte_miel', 'gouttes_ciel', 'eau_oasis', 'sel_ecume', 'plume_aube', 'perle_pluie', 'galet_tonnerre', 'elixir_vents'] },
     ambrelune_armes: { nom: "L'Atelier de Yanis", articles: ['cimeterre_ambre', 'arc_soleil', 'marteau_dune', 'sceptre_aube', 'burnous_sable', 'cotte_legere', 'plume_vent', 'talisman_lueur'] },
     zahra: { nom: 'Les Trésors de Zahra', articles: ['collier_scarabee', 'boucle_corsaire', 'bague_vigueur', 'perle_pluie', 'elixir_soleil', 'plume_aube'] },
+    givrebourg_provisions: { nom: "L'Épicerie de Gaspard", articles: ['tonique', 'datte_miel', 'soupe_chaude', 'eau_oasis', 'the_epices', 'plume_aube', 'braise_vive', 'elixir_soleil', 'sel_ecume'] },
+    givrebourg_armes: { nom: "La Forge d'Inès", articles: ['epee_aurore', 'arc_boreal', 'marteau_braise', 'baton_polaire', 'manteau_fourrure', 'armure_givre', 'gants_laine', 'collier_scarabee'] },
+    col: { nom: "Le Camp d'Hélène", articles: ['soupe_chaude', 'the_epices', 'plume_aube', 'braise_vive', 'elixir_aurore'] },
     canyon: { nom: 'Le Camp de Kahina', articles: ['tonique', 'datte_miel', 'eau_oasis', 'plume_aube', 'perle_pluie', 'elixir_soleil'] },
   },
   quetes: Object.fromEntries(QUETES.map((q) => [q.id, q])),
   objectifs: [
-    { si: ['acte3_fini'], texte: "L'Acte IV arrive bientôt. Termine les quêtes des Sables d'Ambre en attendant !" },
+    { si: ['acte4_fini'], texte: "L'Acte V arrive bientôt. Termine les quêtes des Cimes de Givre en attendant !" },
+    { si: ['aurele_libre'], texte: 'Rallumer le Fanal des Cimes avec les trois braises.' },
+    { si: ['reflet_vaincu'], texte: 'Libérer la gardienne prisonnière du cœur de glace.' },
+    { si: ['braises_reunies'], texte: 'Traverser le Col du Blizzard, au nord des Pentes Blanches, jusqu’au Fanal des Cimes.' },
+    { si: ['braise1', 'braise2', 'braise3'], texte: 'Rapporter les trois braises à Maître Aubin, à Givrebourg.' },
+    { si: ['aubin_vu'], texte: "Retrouver les braises d'Aurèle : plateau des Pentes (nord-ouest), île du Lac Gelé (ouest), Grotte de Givre (est)." },
+    { si: ['acte4'], texte: 'Parler à Maître Aubin, le bourgmestre de Givrebourg.' },
+    { si: ['acte3_fini'], texte: "Parler à Azrou, au sommet de la Tour d'Ambre : les Cimes de Givre vous attendent." },
     { si: ['mirage_vaincu'], texte: "Rallumer le Fanal des Sables, au sommet de la Tour d'Ambre." },
     { si: ['astrolabe_obtenu'], texte: "Traverser la Tempête Pâle, à l'est des dunes, puis le Canyon des Mirages jusqu'à la Tour d'Ambre." },
     { si: ['colosse_vaincu'], texte: "Prendre l'Astrolabe du Soleil sur l'autel de la Chambre du Soleil." },

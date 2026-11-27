@@ -1,24 +1,10 @@
 // Acte II : Port-Venteux, les Récifs Célestes, l'Épave du Fendeur et le Phare des Récifs.
-import type { Cmd, Script } from '../../core/story/script';
+import type { Script } from '../../core/story/script';
+import { moineau } from './moineau';
 
 const A = 'Aël';
 const M = 'Mira';
 const B = 'Brann';
-
-const VOILE: Cmd = { c: 'son', id: 'voile' };
-const VERS = {
-  port: { texte: 'Voguer vers Port-Venteux', faire: [VOILE, { c: 'teleporte', carte: 'port', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Cap sur Port-Venteux !' }] },
-  clairval: { texte: 'Voguer vers Clairval', faire: [VOILE, { c: 'teleporte', carte: 'clairval', ancre: 'X', dir: 'haut' }, { c: 'dit', texte: 'Le courant de vent vous ramène à Clairval.' }] },
-  ambrelune: { texte: 'Voguer vers Ambrelune', faire: [VOILE, { c: 'teleporte', carte: 'ambrelune', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Le Moineau file vers les dunes dorées.' }] },
-} satisfies Record<string, { texte: string; faire: Cmd[] }>;
-
-/** Le Moineau : les caps proposés dépendent de l'avancée de l'histoire. */
-function moineau(texte: string, rester: string, a: keyof typeof VERS, b: keyof typeof VERS): Script {
-  const r = { texte: rester, faire: [] };
-  return [
-    { c: 'si', cond: ['acte3'], alors: [{ c: 'choix', texte, options: [r, VERS[a], VERS[b]] }], sinon: [{ c: 'choix', texte, options: [r, VERS[a]] }] },
-  ];
-}
 
 export const ACTE2: Record<string, Script> = {
   acte2_debut: [
@@ -34,8 +20,8 @@ export const ACTE2: Record<string, Script> = {
     { c: 'soin' },
     { c: 'sauve' },
   ],
-  moineau: moineau('Le Moineau, le petit voilier de tes parents. Où mettre le cap ?', 'Rester à Port-Venteux', 'clairval', 'ambrelune'),
-  moineau_clairval: moineau('Le Moineau attend, voile gonflée. Où mettre le cap ?', 'Rester à Clairval', 'port', 'ambrelune'),
+  moineau: moineau('Le Moineau, le petit voilier de tes parents. Où mettre le cap ?', 'port', 'Rester à Port-Venteux'),
+  moineau_clairval: moineau('Le Moineau attend, voile gonflée. Où mettre le cap ?', 'clairval', 'Rester à Clairval'),
   maelle: [
     { c: 'si', cond: ['fanal2_allume'], alors: [
       { c: 'dit', qui: 'Maëlle', portrait: 'maelle', texte: 'Les voiles reviennent au port ! Port-Venteux ne t’oubliera pas, Aël de Clairval.' },

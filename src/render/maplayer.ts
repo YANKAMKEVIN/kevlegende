@@ -27,7 +27,7 @@ export function construireCouche(c: CarteCompilee, L: number): CoucheCarte {
   const cv = toile(W * L, (H + MARGE_BAS) * L);
   const ctx = ctx2d(cv);
   const g = (x: number, y: number) => c.grille[y]?.[x] ?? 'o';
-  const fond = c.def.ambiance === 'grotte' ? 'c' : c.def.ambiance === 'desert' ? 's' : '.';
+  const fond = c.def.solDefaut === 'a' ? 'a' : c.def.ambiance === 'grotte' ? 'c' : c.def.ambiance === 'desert' ? 's' : c.def.ambiance === 'neige' ? 'n' : '.';
   const ext = exterieur(c.def.ambiance);
   const eau: CoucheCarte['eau'] = [];
   const arbres: CoucheCarte['arbres'] = [];
@@ -70,7 +70,7 @@ export function construireCouche(c: CarteCompilee, L: number): CoucheCarte {
           ctx.fillRect(x * L + L * 0.92, y * L, L * 0.08, L);
         }
         if (g(x, y + 1) === 'o') {
-          ctx.fillStyle = fond === 's' ? shade(PAL.sable, -0.28) : mix(PAL.herbeFonce, PAL.falaise, 0.3);
+          ctx.fillStyle = fond === 's' ? shade(PAL.sable, -0.28) : fond === 'n' ? '#b9cbe0' : mix(PAL.herbeFonce, PAL.falaise, 0.3);
           ctx.fillRect(x * L, y * L + L * 0.9, L, L * 0.1);
         }
       }

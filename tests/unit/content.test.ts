@@ -6,7 +6,7 @@ import { enemy } from '../../src/data/enemies';
 import { hero } from '../../src/data/heroes';
 import { item } from '../../src/data/items';
 import { skill } from '../../src/data/skills';
-import { ACTE1, ACTE2, ACTE3, AVENTURE } from '../../src/bot/walkthrough';
+import { ACTE1, ACTE2, ACTE3, ACTE4, AVENTURE } from '../../src/bot/walkthrough';
 
 describe('Contenu du jeu', () => {
   it('est entièrement cohérent (références, ancres, accessibilité)', () => {
@@ -18,9 +18,9 @@ describe('Contenu du jeu', () => {
     expect(() => item('x')).toThrow();
     expect(() => skill('x')).toThrow();
   });
-  it('la solution couvre les trois actes', () => {
-    expect(AVENTURE.length).toBe(ACTE1.length + ACTE2.length + ACTE3.length);
-    for (const fin of ['acte2_fini', 'acte3_fini']) expect(AVENTURE.some((e) => 'jusqua' in e && e.jusqua === fin)).toBe(true);
+  it('la solution couvre les quatre actes', () => {
+    expect(AVENTURE.length).toBe(ACTE1.length + ACTE2.length + ACTE3.length + ACTE4.length);
+    for (const fin of ['acte2_fini', 'acte3_fini', 'acte4_fini']) expect(AVENTURE.some((e) => 'jusqua' in e && e.jusqua === fin)).toBe(true);
   });
   it('chaque quête est donnée et terminée quelque part', () => {
     const textes = JSON.stringify(MONDE.evenements);

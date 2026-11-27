@@ -1,5 +1,6 @@
 // Acte III : arrivée à Ambrelune, l'oasis des Sables d'Ambre, et ses habitants.
 import type { Script } from '../../core/story/script';
+import { moineau } from './moineau';
 
 const A = 'Aël';
 const M = 'Mira';
@@ -23,13 +24,7 @@ export const ACTE3_AMBRELUNE: Record<string, Script> = {
     { c: 'soin' },
     { c: 'sauve' },
   ],
-  moineau_ambre: [
-    { c: 'choix', texte: 'Le Moineau tire doucement sur ses amarres. Où mettre le cap ?', options: [
-      { texte: 'Rester à Ambrelune', faire: [] },
-      { texte: 'Voguer vers Port-Venteux', faire: [{ c: 'son', id: 'voile' }, { c: 'teleporte', carte: 'port', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Cap au nord, sur Port-Venteux.' }] },
-      { texte: 'Voguer vers Clairval', faire: [{ c: 'son', id: 'voile' }, { c: 'teleporte', carte: 'clairval', ancre: 'X', dir: 'haut' }, { c: 'dit', texte: 'Le long courant de vent vous ramène à Clairval.' }] },
-    ] },
-  ],
+  moineau_ambre: moineau('Le Moineau tire doucement sur ses amarres. Où mettre le cap ?', 'ambrelune', 'Rester à Ambrelune'),
   amastan: [
     { c: 'si', cond: ['fanal3_allume'], alors: [
       { c: 'dit', qui: AM, portrait: 'amastan', texte: "Le lac remonte, mes enfants. Chaque matin, un doigt de plus. Ambrelune vous doit sa source et son Fanal." },

@@ -180,7 +180,11 @@ export const ACTE3_AVENTURE: Record<string, Script> = {
     { c: 'sauve' },
   ],
   azrou: [
-    { c: 'si', cond: ['fanal3_allume'], alors: [{ c: 'dit', qui: Z, portrait: 'azrou', texte: "Je garderai la flamme, cette fois. Et je ne croirai plus aucun roi qui pleure." }], sinon: [
+    { c: 'si', cond: ['fanal3_allume'], alors: [
+      { c: 'dit', qui: Z, portrait: 'azrou', texte: "Je garderai la flamme, cette fois. Et je ne croirai plus aucun roi qui pleure." },
+      // Sauvegardes de fin d'Acte III d'avant l'Acte IV : Azrou relance le voyage.
+      { c: 'si', cond: ['acte3_fini', '!acte4'], alors: [{ c: 'appel', evenement: 'acte4_debut' }] },
+    ], sinon: [
       { c: 'dit', qui: Z, portrait: 'azrou', texte: "Ma fille… Pardonne-moi. Une voix triste me parlait chaque nuit. Elle disait que la flamme me dévorait, qu'elle pouvait m'en délivrer." },
       { c: 'dit', qui: Z, portrait: 'azrou', texte: "J'ai cédé. Et la brume est entrée. Vite, ravivez le Fanal avant qu'elle ne revienne." },
     ] },
@@ -202,7 +206,9 @@ export const ACTE3_AVENTURE: Record<string, Script> = {
   ],
   fin_acte3: [
     { c: 'si', cond: ['acte3_fini'], alors: [
-      { c: 'dit', qui: N, portrait: 'nour', texte: "Le quatrième Fanal brûlait sur les Cimes de Givre, au nord. Les tablettes d'Ilyes en parlent. Nous irons dès que le Moineau sera prêt." },
+      { c: 'si', cond: ['acte4'], alors: [
+        { c: 'dit', qui: N, portrait: 'nour', texte: 'Le Fanal des Sables tient bon. Papa veille sur lui.' },
+      ], sinon: [{ c: 'appel', evenement: 'acte4_debut' }] },
     ], sinon: [
       { c: 'dit', qui: '???', portrait: 'roi', texte: "« Trois… Tu me prends tout, petit voilier. Mes promesses, mes serviteurs, mes jolies brumes. »" },
       { c: 'dit', qui: '???', portrait: 'roi', texte: "« Mais le froid ne craint pas ta lanterne. Viens donc la porter jusqu'aux Cimes de Givre. »" },
@@ -212,7 +218,7 @@ export const ACTE3_AVENTURE: Record<string, Script> = {
       { c: 'titre', texte: "Fin de l'Acte III", sous: 'Trois Fanaux brillent sur Aérys' },
       { c: 'flag', nom: 'acte3_fini' },
       { c: 'sauve' },
-      { c: 'fin', texte: "L'Acte IV, « Les Cimes de Givre », arrive bientôt. Ta sauvegarde t'attendra : termine les quêtes des Sables d'Ambre, affronte le Ver Ancien et renforce ton équipe." },
+      { c: 'appel', evenement: 'acte4_debut' },
     ] },
   ],
 };

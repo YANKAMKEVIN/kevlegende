@@ -34,6 +34,11 @@ const L: SkillDef[] = [
   { id: 'voile_etoile', nom: "Voile d'Étoiles", desc: 'Accélère tout le groupe pendant 2 tours.', cout: 14, cible: 'allies', type: 'soutien', element: 'neutre', puissance: 0, statut: { id: 'hate', chance: 1, tours: 2 } },
   { id: 'etoile_filante', nom: 'Étoile Filante', desc: 'Une étoile tombe sur un ennemi. Lumière.', cout: 13, cible: 'ennemi', type: 'magique', element: 'lumiere', puissance: 27 },
   { id: 'nova', nom: 'Nova', desc: 'Un soleil éclate au-dessus des ennemis. Lumière, tous.', cout: 20, cible: 'ennemis', type: 'magique', element: 'lumiere', puissance: 19 },
+  // --- Acte IV ---
+  { id: 'marteau_volcan', nom: 'Marteau-Volcan', desc: 'La forge entière dans un seul coup. Feu, tous.', cout: 18, cible: 'ennemis', type: 'physique', element: 'feu', puissance: 20 },
+  { id: 'aurore', nom: 'Aurore', desc: 'Une lumière boréale soigne tout le groupe.', cout: 22, cible: 'allies', type: 'soin', element: 'lumiere', puissance: 32 },
+  { id: 'tranche_aurore', nom: "Tranche-Aurore", desc: 'Une lame chargée de lumière boréale. Lumière.', cout: 16, cible: 'ennemi', type: 'physique', element: 'lumiere', puissance: 32 },
+  { id: 'pluie_meteores', nom: 'Pluie de Météores', desc: 'Des étoiles s’abattent sur les ennemis. Lumière, tous.', cout: 28, cible: 'ennemis', type: 'magique', element: 'lumiere', puissance: 25 },
   // --- Ennemis ---
   { id: 'e_charge', nom: 'Charge', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 11 },
   { id: 'e_morsure', nom: 'Morsure', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 13 },
@@ -59,6 +64,11 @@ const L: SkillDef[] = [
   { id: 'e_mirage', nom: 'Mirage', desc: '', cout: 0, cible: 'ennemi', type: 'magique', element: 'ombre', puissance: 18, statut: { id: 'sommeil', chance: 0.3, tours: 2 } },
   { id: 'e_soif', nom: 'Soif Brûlante', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'feu', puissance: 14, statut: { id: 'poison', chance: 0.3, tours: 3 } },
   { id: 'e_seisme', nom: 'Secousse', desc: '', cout: 0, cible: 'ennemis', type: 'physique', element: 'terre', puissance: 15 },
+  { id: 'e_griffes', nom: 'Griffes', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 21 },
+  { id: 'e_givre', nom: 'Souffle Gelé', desc: '', cout: 0, cible: 'ennemi', type: 'magique', element: 'eau', puissance: 22, statut: { id: 'sommeil', chance: 0.2, tours: 2 } },
+  { id: 'e_blizzard', nom: 'Blizzard', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'eau', puissance: 16, statut: { id: 'affaibli', chance: 0.2, tours: 2 } },
+  { id: 'e_avalanche', nom: 'Avalanche', desc: '', cout: 0, cible: 'ennemis', type: 'physique', element: 'terre', puissance: 18 },
+  { id: 'e_couronne', nom: 'Couronne Pâle', desc: '', cout: 0, cible: 'ennemis', type: 'magique', element: 'ombre', puissance: 21, statut: { id: 'affaibli', chance: 0.3, tours: 2 } },
   { id: 'e_engloutir', nom: 'Engloutir', desc: '', cout: 0, cible: 'ennemi', type: 'physique', element: 'neutre', puissance: 26 },
 ];
 

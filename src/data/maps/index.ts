@@ -19,7 +19,13 @@ import { dunes } from './acte3/dunes';
 import { fanal_sables } from './acte3/fanal_sables';
 import { ruines } from './acte3/ruines';
 import { tombeau } from './acte3/tombeau';
+import { col_blizzard } from './acte4/col_blizzard';
+import { fanal_cimes } from './acte4/fanal_cimes';
+import { givrebourg } from './acte4/givrebourg';
+import { grotte_givre } from './acte4/grotte_givre';
+import { lac_givre } from './acte4/lac_givre';
+import { pentes } from './acte4/pentes';
 
-const L: MapDef[] = [maison_ael, clairval, mairie, bois, col, grotte1, grotte2, colline, port, forge, recifs, epave, phare, ambrelune, dunes, ruines, tombeau, canyon, fanal_sables];
+const L: MapDef[] = [maison_ael, clairval, mairie, bois, col, grotte1, grotte2, colline, port, forge, recifs, epave, phare, ambrelune, dunes, ruines, tombeau, canyon, fanal_sables, givrebourg, pentes, lac_givre, grotte_givre, col_blizzard, fanal_cimes];
 
 export const CARTES: Readonly<Record<string, MapDef>> = Object.fromEntries(L.map((m) => [m.id, m]));
