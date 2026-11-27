@@ -48,6 +48,14 @@ export function franchissable(j: Jeu, x: number, y: number, obs: Set<string> = o
   return tuile(c, x, y).passable && !obs.has(cle(x, y));
 }
 
+export function surPorte(j: Jeu): boolean {
+  const c = j.carte();
+  return (c.def.portes ?? []).some((po) => {
+    const q = ancre(c, po.ancre);
+    return q.x === j.p.x && q.y === j.p.y;
+  });
+}
+
 export type ResultatPas = 'bloque' | 'avance' | 'porte' | 'evenement' | 'rencontre' | 'occupe';
 
 export function deplacer(j: Jeu, dir: Dir): ResultatPas {

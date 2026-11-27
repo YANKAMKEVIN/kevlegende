@@ -19,7 +19,18 @@ export const ACTE2: Record<string, Script> = {
     { c: 'soin' },
     { c: 'sauve' },
   ],
-  moineau: [{ c: 'dit', texte: 'Le Moineau, le petit voilier de tes parents. Sa voile bleue claque doucement au vent.' }],
+  moineau: [
+    { c: 'choix', texte: 'Le Moineau, le petit voilier de tes parents. Où mettre le cap ?', options: [
+      { texte: 'Rester à Port-Venteux', faire: [] },
+      { texte: 'Voguer vers Clairval', faire: [{ c: 'son', id: 'voile' }, { c: 'teleporte', carte: 'clairval', ancre: 'X', dir: 'haut' }, { c: 'dit', texte: 'Le courant de vent vous ramène à Clairval.' }] },
+    ] },
+  ],
+  moineau_clairval: [
+    { c: 'choix', texte: 'Le Moineau attend, voile gonflée. Où mettre le cap ?', options: [
+      { texte: 'Rester à Clairval', faire: [] },
+      { texte: 'Voguer vers Port-Venteux', faire: [{ c: 'son', id: 'voile' }, { c: 'teleporte', carte: 'port', ancre: 'B', dir: 'haut' }, { c: 'dit', texte: 'Cap sur Port-Venteux !' }] },
+    ] },
+  ],
   maelle: [
     { c: 'si', cond: ['fanal2_allume'], alors: [
       { c: 'dit', qui: 'Maëlle', portrait: 'maelle', texte: 'Les voiles reviennent au port ! Port-Venteux ne t’oubliera pas, Aël de Clairval.' },

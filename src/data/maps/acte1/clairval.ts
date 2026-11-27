@@ -9,7 +9,7 @@ export const clairval: MapDef = {
   ambiance: 'jour',
   musique: 'village',
   solDefaut: '.',
-  sol: { P: ':', S: ':', Q: ':', U: ':', R: ':', V: ':', M: ':', A: '.', B: ':', D: '.', E: ':', '4': '_', G: '_', F: ':' },
+  sol: { X: 'd', '6': 'd', P: ':', S: ':', Q: ':', U: ':', R: ':', V: ':', M: ':', A: '.', B: ':', D: '.', E: ':', '4': '_', G: '_', F: ':' },
   plan: [
     'oooooooooooooooooooP:ooooooooooooooooooo',
     'ooooooooooooooooooo::oTToooooooooooooooo',
@@ -39,8 +39,8 @@ export const clairval: MapDef = {
     'ooooooTTTTTT..........f.....TTTooooooooo',
     'oooooooooooTTT.............TTooooooooooo',
     'oooooooooooooTTTTTTTT...f.TToooooooooooo',
-    'ooooooooooooooooooooTT...TTooooooooooooo',
-    'oooooooooooooooooooooTTTTToooooooooooooo',
+    'ooooooooooooooooooooTTdXdTTooooooooooooo',
+    'oooooooooooooooooooooTT6TToooooooooooooo',
   ],
   props: [
     { type: 'maison', ancre: '1', w: 4, h: 3 },
@@ -51,6 +51,7 @@ export const clairval: MapDef = {
     { type: 'panneau', ancre: '7', evenement: 'panneau_bois' },
     { type: 'panneau', ancre: '8', evenement: 'panneau_colline' },
     { type: 'moulin', ancre: '9', w: 3, h: 4 },
+    { type: 'navire', ancre: '6', si: ['acte2'], evenement: 'moineau_clairval' },
   ],
   pnj: [
     { ancre: 'F', id: 'tilda', nom: 'Tilda', apparence: APP.tilda, evenement: 'tilda', dir: 'bas' },

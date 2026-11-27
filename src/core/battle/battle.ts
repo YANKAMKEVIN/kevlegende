@@ -62,6 +62,7 @@ function finDeTour(b: BattleState, c: Combattant, ev: BattleEvent[]): void {
 export function avancer(b: BattleState): BattleEvent[] {
   const ev: BattleEvent[] = [];
   let garde = 0;
+  verifierFin(b, ev);
   while (!b.fini && !b.attente) {
     if (++garde > 500) throw new Error('Boucle de combat infinie');
     const actifs = b.combattants.filter((c) => c.pv > 0).sort((x, y) => x.delai - y.delai);

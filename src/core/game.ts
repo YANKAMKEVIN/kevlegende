@@ -57,6 +57,22 @@ export class Jeu {
     return j;
   }
 
+  /** Reprend une partie sauvegardée ; replace le joueur sur une case sûre si sa position n'est plus valide. */
+  static charger(monde: Monde, p: Partie): Jeu {
+    const j = new Jeu(monde, p);
+    if (!monde.cartes[p.carte]) j.p.carte = monde.depart.carte;
+    if (!explore.franchissable(j, p.x, p.y) || explore.surPorte(j)) {
+      const c = j.carte();
+      const arrivees = Object.values(monde.cartes).flatMap((d) => (d.portes ?? []).filter((po) => po.vers === c.def.id).map((po) => po.arrivee));
+      const sure = arrivees.map((a) => c.ancres[a]).find((pos) => pos && explore.franchissable(j, pos.x, pos.y));
+      const pos = sure ?? ancre(j.carte(monde.depart.carte), monde.depart.ancre);
+      if (!sure) j.p.carte = monde.depart.carte;
+      j.p.x = pos.x;
+      j.p.y = pos.y;
+    }
+    return j;
+  }
+
   private static defCarte(monde: Monde, id: string) {
     const d = monde.cartes[id];
     if (!d) throw new Error(`Carte inconnue : ${id}`);
